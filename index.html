@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a0e1a">
+<meta name="description" content="Portfolio d'Amine, étudiant ingénieur en mécatronique (ENISo). Systèmes embarqués STM32/FreeRTOS et robotique ROS 2. Recherche un stage PFE de 6 mois dès février 2027.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Amine — Ingénieur mécatronique · Embarqué & Robotique">
+<meta property="og:description" content="Du firmware au robot autonome. STM32, FreeRTOS, ROS 2, Gazebo. Disponible pour un stage PFE dès février 2027.">
+<noscript><style>.r{opacity:1!important;transform:none!important}nav ul{display:flex!important}.menu-btn{display:none!important}</style></noscript>
+<link rel="canonical" href="https://aminensiri001.github.io/">
+<meta property="og:url" content="https://aminensiri001.github.io/">
+<meta name="author" content="Amine Nsiri">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0e1a'/%3E%3Cpath d='M18 46 L30 18 L42 46 M23 36 H37' stroke='%23e8915a' stroke-width='5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='47' cy='46' r='4' fill='%23f4c77d'/%3E%3C/svg%3E">
+<title>Amine — Ingénieur mécatronique · Embarqué & Robotique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--f-display:"Archivo","Helvetica Neue",Arial,sans-serif;--f-body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;--f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;--bg:#0a0e1a;--text:#ece8e1;--muted:#9aa2b4;--accent:#e8915a;--accent2:#f4c77d;--acc-rgb:232,145,90;--acc2-rgb:244,199,125;--deep-rgb:76,111,255;--panel-rgb:14,19,34;--bg-rgb:10,14,26;--on-acc:#1b1109;--danger:#ff8f8f;--glass:rgba(255,255,255,.045);--glass-b:rgba(255,255,255,.09);--line:rgba(255,255,255,.08);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(84px + env(safe-area-inset-top,0px));background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--text);font:400 17px/1.65 var(--f-body);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--f-display);margin:0;letter-spacing:-.02em;line-height:1.05;text-wrap:balance}
+a{color:inherit}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px;position:relative}
+/* background */
+.bg{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.bg::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse 70% 60% at 50% 0,#000 20%,transparent 75%);-webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 0,#000 20%,transparent 75%)}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.28;animation:float 18s ease-in-out infinite}
+.o1{width:420px;height:420px;background:var(--accent);top:-120px;left:-100px;opacity:.16}
+.o2{width:380px;height:380px;background:rgb(var(--deep-rgb));top:200px;right:-120px;animation-delay:-8s}
+@keyframes float{50%{transform:translate(40px,30px)}}
+/* nav */
+header{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:0;right:0;z-index:20;padding:0 16px}
+nav{max-width:1100px;margin:0 auto;height:56px;padding:0 10px 0 22px;display:flex;align-items:center;justify-content:space-between;background:rgba(var(--panel-rgb),.6);border:1px solid var(--glass-b);border-radius:999px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.logo{font:700 1.15rem var(--f-display);font-stretch:118%;letter-spacing:-.01em;text-decoration:none}
+.logo i{color:var(--accent);font-style:normal}
+nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0;font-size:.9rem}
+nav ul a{color:var(--muted);text-decoration:none;transition:color .2s}
+nav ul a:hover{color:var(--text)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;border-radius:999px;background:var(--accent);color:var(--on-acc);font-weight:500;font-size:.95rem;text-decoration:none;border:1px solid var(--accent);transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(var(--acc-rgb),.28)}
+.btn.sm{padding:9px 18px;font-size:.85rem}
+.btn.ghost{background:var(--glass);color:var(--text);border-color:var(--glass-b);backdrop-filter:blur(10px)}
+.btn.ghost:hover{box-shadow:none;border-color:var(--accent)}
+/* hero */
+.hero{min-height:100vh;display:flex;align-items:center;padding:140px 0 80px}
+.hero .wrap{display:grid;grid-template-columns:1.25fr 1fr;gap:56px;align-items:center;width:100%}
+.pill{display:inline-flex;align-items:center;gap:10px;padding:7px 16px;border-radius:999px;background:var(--glass);border:1px solid var(--glass-b);font-size:.78rem;color:var(--muted);margin-bottom:28px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 rgba(var(--acc-rgb),.6);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(var(--acc-rgb),0)}100%{box-shadow:0 0 0 0 rgba(var(--acc-rgb),0)}}
+h1{font-size:clamp(2.6rem,6.2vw,4.8rem);font-weight:700}
+h1 span{background:linear-gradient(100deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--muted);font-size:1.15rem;max-width:50ch;margin:26px 0 36px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+/* glass */
+.glass{background:var(--glass);border:1px solid var(--glass-b);border-radius:20px;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:inset 0 1px 0 rgba(255,255,255,.06)}
+.term{padding:0;overflow:hidden;animation:float 9s ease-in-out infinite}
+.term .bar{display:flex;gap:7px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.term .bar b{width:10px;height:10px;border-radius:50%;background:var(--glass-b)}
+.term pre{margin:0;padding:22px;font:400 .82rem/1.9 var(--f-mono);color:var(--muted);overflow-x:auto}
+.term .k{color:var(--accent2)}.term .v{color:var(--accent)}.term .c{opacity:.6}
+.cursor{display:inline-block;width:8px;height:15px;background:var(--accent);vertical-align:middle;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+/* sections */
+section{padding:100px 0}
+.eyebrow{font:500 .78rem var(--f-mono);color:var(--accent);letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
+h2{font-size:clamp(2rem,4.4vw,3.2rem);font-weight:600;margin-bottom:48px;max-width:20ch}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+.stat{padding:26px}
+.stat b{display:block;font:700 1.9rem/1.1 var(--f-display);font-stretch:112%;letter-spacing:-.02em;margin-bottom:4px}
+.stat span{color:var(--muted);font-size:.88rem}
+.about{display:grid;grid-template-columns:1.3fr 1fr;gap:40px}
+.about p{color:var(--muted);margin:0 0 18px}
+.facts{padding:12px 28px;align-self:start}
+.facts div{padding:16px 0;border-bottom:1px solid var(--line)}
+.facts div:last-child{border:0}
+.facts small{display:block;font:400 .72rem var(--f-mono);color:var(--accent);text-transform:uppercase;letter-spacing:.1em}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.card{padding:28px;transition:transform .3s,border-color .3s,background .3s}
+.card:hover{transform:translateY(-6px);border-color:rgba(var(--acc-rgb),.4);background:rgba(var(--acc-rgb),.05)}
+.card h3{font-size:1.2rem;margin-bottom:16px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips span{padding:4px 12px;border-radius:999px;border:1px solid var(--glass-b);font:400 .8rem var(--f-mono);color:var(--muted)}
+.projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:18px}
+.proj{display:flex;flex-direction:column;gap:14px}
+.proj .n{font:500 .75rem var(--f-mono);color:var(--accent)}
+.proj p{margin:0;color:var(--muted);font-size:.95rem}
+.proj p a{color:var(--accent);text-decoration:none;white-space:nowrap}.proj p a:hover{text-decoration:underline}
+.proj .chips{margin-top:auto;padding-top:10px}
+.tl{display:grid;gap:16px}
+.row{display:grid;grid-template-columns:170px 1fr;gap:24px;padding:26px 30px}
+.row time{font:400 .8rem var(--f-mono);color:var(--accent);padding-top:5px}
+.row h3{font-size:1.2rem;margin-bottom:6px}
+.row p{margin:0;color:var(--muted);font-size:.95rem}
+.contact{text-align:center;padding:80px 24px;position:relative;overflow:hidden}
+.contact h2{margin:0 auto 20px}
+.contact p{color:var(--muted);max-width:46ch;margin:0 auto 36px}
+.contact .cta{justify-content:center}
+footer{padding:64px 0 32px;border-top:1px solid var(--line);color:var(--muted);font-size:.92rem}
+.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+.fgrid p{margin:12px 0 0;max-width:34ch}
+.fgrid .fh{font:500 .75rem var(--f-mono);color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin:0 0 14px}
+.fgrid a:not(.logo){display:block;padding:8px 0;text-decoration:none;transition:color .2s}
+.fgrid a:not(.logo):hover{color:var(--text)}
+.fbot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:48px;padding-top:24px;border-top:1px solid var(--line);font:400 .78rem var(--f-mono)}
+.fbot a{text-decoration:none}.fbot a:hover{color:var(--accent)}
+.quote{margin:0;display:flex;flex-direction:column;gap:20px}
+.quote blockquote{margin:0;font:500 1.05rem/1.55 var(--f-display);color:var(--text)}
+.quote figcaption b{display:block;font-weight:500}
+.quote figcaption small{color:var(--muted)}
+.quote figcaption{margin-top:auto}
+.ph{align-self:flex-start;padding:3px 10px;border-radius:999px;border:1px dashed var(--accent);color:var(--accent);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em}
+.grid.t{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+@media (max-width:820px){.fgrid{grid-template-columns:1fr;gap:28px}}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
+[tabindex="-1"]:focus{outline:none}
+.skip{position:absolute;left:16px;top:-80px;z-index:50;padding:10px 18px;background:var(--accent);color:var(--on-acc);border-radius:999px;font-weight:500;text-decoration:none}
+.skip:focus{top:calc(12px + env(safe-area-inset-top,0px))}
+header nav{position:relative}
+.navr{display:flex;align-items:center;gap:10px}
+.btn,button{min-height:44px;cursor:pointer;font-family:inherit}
+.btn.sm{min-height:40px}
+nav ul a[aria-current="true"]{color:var(--text)}
+.menu-btn{display:none;align-items:center;justify-content:center;flex-direction:column;gap:5px;width:44px;height:44px;min-height:44px;padding:0;border-radius:50%;background:var(--glass);border:1px solid var(--glass-b);color:var(--text)}
+.menu-btn span{display:block;width:18px;height:2px;background:currentColor;border-radius:2px;transition:transform .3s,opacity .3s}
+.menu-btn[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.menu-btn[aria-expanded="true"] span:nth-child(2){opacity:0}
+.menu-btn[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+@media (max-width:820px){.menu-btn{display:inline-flex}header.open nav ul{display:flex;flex-direction:column;position:absolute;top:calc(100% + 10px);left:0;right:0;gap:2px;padding:10px;background:rgba(var(--panel-rgb),.94);border:1px solid var(--glass-b);border-radius:20px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);animation:drop .25s ease}header.open nav ul a{display:block;padding:13px 16px;border-radius:12px;font-size:1rem}header.open nav ul a:hover{background:var(--glass)}}
+@keyframes drop{from{opacity:0;transform:translateY(-8px)}}
+.proj{position:relative;overflow:hidden}
+.proj::before{content:"";position:absolute;inset:0;background:radial-gradient(320px circle at var(--mx,50%) var(--my,0%),rgba(var(--acc-rgb),.14),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
+.proj:hover::before{opacity:1}
+.proj .n::after{content:"";display:block;height:1px;width:0;background:var(--accent);margin-top:8px;transition:width .5s}
+.proj:hover .n::after{width:48px}
+@keyframes rise{from{opacity:0;transform:translateY(32px) scale(.96)}}
+.r.in .projects .card{animation:rise .8s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc(var(--i,0)*.12s)}
+.projects .card:nth-child(2){--i:1}.projects .card:nth-child(3){--i:2}.projects .card:nth-child(4){--i:3}
+form.cf{max-width:560px;margin:0 auto 28px;text-align:left;display:grid;gap:18px}
+.fld label{display:block;font:500 .78rem var(--f-mono);color:var(--muted);margin-bottom:8px;letter-spacing:.06em;text-transform:uppercase}
+.fld input,.fld textarea{width:100%;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--glass-b);color:var(--text);font:400 1rem var(--f-body);transition:border-color .2s,box-shadow .2s}
+.fld textarea{min-height:140px;resize:vertical}
+.fld input:focus,.fld textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(var(--acc-rgb),.18)}
+.fld [aria-invalid="true"]{border-color:var(--danger)}
+.err{display:block;min-height:1.3em;margin-top:6px;color:var(--danger);font-size:.85rem}
+form.cf .btn{justify-self:center}
+.status{min-height:1.5em;font-size:.95rem;color:var(--accent);text-align:center}
+.status.bad{color:var(--danger)}
+.or{color:var(--muted);font-size:.85rem;margin:8px 0 16px}
+::selection{background:rgba(var(--acc-rgb),.3)}
+.hero{min-height:100svh}
+.hero+section{padding:24px 0 40px}
+.glass.term{animation:bob 8s ease-in-out infinite;will-change:transform}
+@keyframes bob{50%{transform:translateY(-10px)}}
+.orb{will-change:transform}
+@media (max-width:820px){.orb{filter:blur(60px);opacity:.22}.o1,.o2{width:260px;height:260px}.glass{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}}
+@media (forced-colors:active){h1 span{background:none;color:Highlight;-webkit-text-fill-color:currentColor}.fld input:focus,.fld textarea:focus{outline:2px solid Highlight}.dot{background:Highlight}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.social{display:flex;gap:24px;margin-top:28px;font:400 .85rem var(--f-mono)}
+.social a{color:var(--muted);text-decoration:none;padding:10px 0;border-bottom:1px solid var(--line);transition:color .2s,border-color .2s}
+.social a:hover{color:var(--accent);border-color:var(--accent)}
+.avatar{display:block;width:100%;max-width:280px;aspect-ratio:1;object-fit:cover;object-position:center top;border-radius:20px;margin:16px auto 8px;border:1px solid var(--glass-b)}
+.dl[hidden]{display:none}
+/* reveal */
+.r{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+.r.in{opacity:1;transform:none}
+@media (max-width:820px){nav ul{display:none}.hero .wrap,.about{grid-template-columns:1fr}.hero{padding-top:120px}.row{grid-template-columns:1fr;gap:8px}section{padding:72px 0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.r{opacity:1;transform:none}html{scroll-behavior:auto}}
+
+/* ===== motion layer (GSAP + Lenis) ===== */
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-stopped{overflow:hidden}
+.hero{position:relative;isolation:isolate}
+.rays{position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:0;transition:opacity 1.6s ease;-webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
+.rays.on{opacity:1}
+h1 .w{display:inline-block;will-change:filter,opacity,transform}
+h1 > .w{background:none;color:inherit;-webkit-text-fill-color:currentColor}
+/* star border on the primary CTA */
+.star{position:relative;overflow:hidden;isolation:isolate;padding:1px;border:0;background:transparent;border-radius:999px;display:inline-flex}
+.star::before,.star::after{content:"";position:absolute;width:300%;height:50%;border-radius:50%;z-index:-1;opacity:.85;background:radial-gradient(circle,var(--text),transparent 12%)}
+.star::before{bottom:-12px;right:-250%;animation:star-b 5s linear infinite alternate}
+.star::after{top:-12px;left:-250%;animation:star-t 5s linear infinite alternate}
+.star .btn{position:relative;z-index:1}
+@keyframes star-b{0%{transform:translateX(0);opacity:1}100%{transform:translateX(-100%);opacity:0}}
+@keyframes star-t{0%{transform:translateX(0);opacity:1}100%{transform:translateX(100%);opacity:0}}
+.stat b{font-variant-numeric:tabular-nums}
+html.gs .r{opacity:1;transform:none;transition:none}
+@media (prefers-reduced-motion:reduce){.star::before,.star::after{display:none}.rays{display:none}}
+
+/* ===== typography system ===== */
+h1{font-size:clamp(2.3rem,5.2vw,4.3rem);font-weight:780;font-stretch:112%;letter-spacing:-.035em;line-height:.98}
+h2{font-size:clamp(2rem,4.3vw,3.2rem);font-weight:680;font-stretch:110%;letter-spacing:-.03em}
+h3{font-weight:620;font-stretch:104%;letter-spacing:-.01em}
+.lead{font-size:clamp(1.05rem,1.6vw,1.2rem);line-height:1.6;max-width:52ch}
+.about p,.row p{max-width:65ch}
+.eyebrow{letter-spacing:.16em}
+.card h3,.row h3{font-size:1.18rem}
+
+/* ===== projects: featured bento + filterable list ===== */
+.feat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.fp{display:flex;flex-direction:column;gap:14px;min-width:0}
+.fp.wide{grid-column:span 2;background:linear-gradient(135deg,rgba(var(--acc-rgb),.07),rgba(var(--acc2-rgb),.03) 60%,transparent),var(--glass)}
+.fp.wide h3{font-size:clamp(1.4rem,2.4vw,1.9rem);font-stretch:108%}
+.fp.wide p{max-width:62ch;font-size:1rem}
+.pm{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font:500 .74rem var(--f-mono);letter-spacing:.06em;text-transform:uppercase}
+.pm .cat{color:var(--accent)}.pm .yr{color:var(--muted)}
+.live{display:inline-flex;align-items:center;gap:8px;padding:4px 10px;border-radius:999px;border:1px solid rgba(var(--acc-rgb),.35);color:var(--accent)}
+.kpi{display:flex;flex-direction:column;gap:2px;padding:4px 0 10px;border-bottom:1px solid var(--line)}
+.kpi b{font:750 clamp(2rem,3.4vw,2.6rem)/1 var(--f-display);font-stretch:112%;letter-spacing:-.03em;background:linear-gradient(100deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.kpi span{color:var(--muted);font-size:.86rem}
+.pipe{list-style:none;margin:4px 0;padding:0;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font:500 .78rem var(--f-mono)}
+.pipe li{padding:7px 12px;border-radius:10px;background:rgba(var(--bg-rgb),.55);border:1px solid var(--glass-b);color:var(--text)}
+.pipe li+li::before{content:"→";margin:0 10px 0 -2px;color:var(--accent);opacity:.7}
+.pipe li+li{display:flex;align-items:center}
+.more{margin-top:56px}
+.moreh{display:flex;justify-content:space-between;align-items:end;gap:16px 24px;flex-wrap:wrap;margin-bottom:20px}
+.sub{font-size:1.35rem}
+.pf{display:flex;flex-wrap:wrap;gap:8px}
+.fb{min-height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--glass-b);background:transparent;color:var(--muted);font:500 .85rem var(--f-body);transition:color .2s,border-color .2s,background .2s}
+.fb:hover{color:var(--text);border-color:rgba(var(--acc-rgb),.4)}
+.fb[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-acc)}
+.fc{font:400 .72rem var(--f-mono);opacity:.7}
+.plist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 40px;border-top:1px solid var(--line)}
+.pi{display:flex;flex-direction:column;gap:8px;padding:22px 0;border-bottom:1px solid var(--line);min-width:0;transition:padding .3s}
+.pi:hover{padding-left:10px}
+.pih{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.pih h3{font-size:1.06rem}
+.pictx{font:400 .74rem var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.pi p{margin:0;color:var(--muted);font-size:.93rem;max-width:60ch}
+.pi .chips span{font-size:.72rem;padding:2px 10px}
+@media (max-width:900px){.feat{grid-template-columns:repeat(2,minmax(0,1fr))}.fp.wide{grid-column:1/-1}}
+@media (max-width:640px){.feat,.plist{grid-template-columns:1fr}}
+
+/* ===== hero portrait ===== */
+.portrait{position:relative;margin:0 auto;width:100%;max-width:380px;justify-self:center}
+.pframe{position:relative;border-radius:24px;overflow:hidden;border:1px solid var(--glass-b);background:var(--glass);aspect-ratio:1;max-width:100%;box-shadow:0 30px 80px -30px rgba(var(--acc-rgb),.35)}
+.pframe img{display:block;width:100%;height:100%;object-fit:cover;object-position:center top}
+.pframe::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(var(--bg-rgb),.55)),repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 4px);pointer-events:none}
+.cm{position:absolute;width:18px;height:18px;border-color:var(--accent);border-style:solid;z-index:1}
+.c1{top:12px;left:12px;border-width:2px 0 0 2px}.c2{top:12px;right:12px;border-width:2px 2px 0 0}.c3{bottom:12px;left:12px;border-width:0 0 2px 2px}.c4{bottom:12px;right:12px;border-width:0 2px 2px 0}
+.ptag{position:absolute;z-index:2;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:rgba(var(--panel-rgb),.78);border:1px solid var(--glass-b);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);font-size:.76rem;color:var(--text);white-space:nowrap}
+.pt1{top:9%;left:-28px}.pt2{top:38%;right:-30px}
+.idc{position:relative;z-index:2;margin:-38px 18px 0;padding:16px 20px;border-radius:18px;background:rgba(var(--panel-rgb),.82);border:1px solid var(--glass-b);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;flex-direction:column;gap:2px}
+.idc b{font:700 1.15rem var(--f-display);font-stretch:110%}
+.idc span{color:var(--muted);font-size:.88rem}
+.idc .idm{color:var(--accent);font-size:.74rem;letter-spacing:.04em;margin-top:4px}
+@media (max-width:820px){.portrait{max-width:320px}.pt1{left:-8px}.pt2{right:-8px}}
+/* ===== timeline ===== */
+.tlx{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:48px}
+.tlg{min-width:0}
+.tlg .sub{margin-bottom:24px}
+.rail{list-style:none;margin:0;padding:0;position:relative;display:flex;flex-direction:column;gap:28px}
+.rail::before{content:"";position:absolute;left:21px;top:8px;bottom:8px;width:2px;background:linear-gradient(var(--accent),rgba(var(--acc2-rgb),.35) 70%,transparent);opacity:.55}
+.ev{display:grid;grid-template-columns:44px minmax(0,1fr);gap:18px;position:relative}
+.mb{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--bg);border:1px solid rgba(var(--acc-rgb),.45);color:var(--accent);font:700 .78rem var(--f-display);font-stretch:118%;letter-spacing:.02em;position:relative;z-index:1;box-shadow:0 0 0 5px var(--bg);transition:background .3s,color .3s}
+.ev:hover .mb{background:var(--accent);color:var(--on-acc)}
+.evb{display:flex;flex-direction:column;gap:4px;min-width:0}
+.evm{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.evm time{font:500 .76rem var(--f-mono);color:var(--accent)}
+.tag{font:500 .66rem var(--f-mono);text-transform:uppercase;letter-spacing:.1em;padding:2px 8px;border-radius:6px;border:1px solid var(--glass-b);color:var(--muted)}
+.ev h4{margin:2px 0 0;font:620 1.08rem/1.3 var(--f-display);font-stretch:104%;text-wrap:balance}
+.org{color:var(--text);opacity:.8;font-size:.9rem}
+.evb p{margin:6px 0 0;color:var(--muted);font-size:.93rem;max-width:60ch}
+.evb .chips{margin-top:8px}.evb .chips span{font-size:.72rem;padding:2px 10px}
+@media (max-width:900px){.tlx{grid-template-columns:1fr}}
+
+/* ===== language toggle ===== */
+.lang{display:inline-flex;padding:3px;border-radius:999px;border:1px solid var(--glass-b);background:var(--glass)}
+.lb{min-height:34px!important;min-width:40px;padding:0 10px;border:0;border-radius:999px;background:transparent;color:var(--muted);font:600 .74rem var(--f-mono);letter-spacing:.06em;transition:background .2s,color .2s}
+.lb:hover{color:var(--text)}
+.lb[aria-pressed="true"]{background:var(--text);color:var(--bg)}
+@media (max-width:480px){.navr .btn.sm{display:none}}
+
+/* ===== stack: core skills with proof + spec sheet ===== */
+.core{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:18px}
+.sk{grid-column:span 2;padding:26px;display:flex;flex-direction:column;gap:12px;min-width:0;transition:border-color .3s,transform .3s}
+.sk:nth-child(n+4){grid-column:span 3}
+.sk:hover{border-color:rgba(var(--acc-rgb),.45);transform:translateY(-4px)}
+.skd{font:500 .72rem var(--f-mono);text-transform:uppercase;letter-spacing:.12em;color:var(--accent)}
+.sk h3{font-size:1.35rem;font-stretch:110%}
+.proofs{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column}
+.proofs li{display:grid;grid-template-columns:minmax(92px,auto) minmax(0,1fr);gap:14px;align-items:baseline;padding:10px 0;border-top:1px solid var(--line)}
+.proofs b{font:700 .98rem var(--f-display);font-stretch:108%;color:var(--text);white-space:nowrap;font-variant-numeric:tabular-nums}
+.proofs span{color:var(--muted);font-size:.88rem}
+.skl{margin-top:auto;align-self:flex-start;min-height:40px!important;padding:0 2px;border:0;background:none;color:var(--accent);font:500 .88rem var(--f-body);border-bottom:1px solid rgba(var(--acc-rgb),.35);transition:border-color .2s,gap .2s}
+.skl:hover{border-color:var(--accent)}
+.skc{font:400 .75rem var(--f-mono);opacity:.75}
+.spec{margin-top:56px}
+.spech{display:flex;justify-content:space-between;align-items:baseline;gap:8px 24px;flex-wrap:wrap;margin-bottom:12px}
+.hint{margin:0;color:var(--muted);font-size:.85rem;display:inline-flex;align-items:center;gap:8px}
+.hk{width:18px;height:0;border-bottom:1px dashed var(--accent)}
+.sheet{margin:0;border-top:1px solid var(--line)}
+.srow{display:grid;grid-template-columns:200px minmax(0,1fr);gap:20px;padding:16px 0;border-bottom:1px solid var(--line)}
+.srow dt{font:500 .76rem var(--f-mono);text-transform:uppercase;letter-spacing:.1em;color:var(--accent);padding-top:3px}
+.srow dd{margin:0;display:flex;flex-wrap:wrap;gap:4px 0;color:var(--text);font-size:.95rem}
+.si{display:inline-flex;align-items:center}
+.si:not(:last-child)::after{content:"·";margin:0 10px;color:var(--muted);opacity:.6}
+button.si{min-height:0;padding:0;border:0;background:none;color:var(--text);font:inherit;cursor:pointer}
+.si.lk{text-decoration:underline dashed rgba(var(--acc-rgb),.7);text-underline-offset:5px}
+.si.lk:hover{color:var(--accent)}
+.pbanner{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:-24px 0 28px;padding:12px 12px 12px 20px;border-radius:16px;border:1px solid rgba(var(--acc-rgb),.4);background:rgba(var(--acc-rgb),.08)}
+.pbanner b{color:var(--accent)}
+.pbx{min-height:40px;padding:0 16px;border-radius:999px;border:1px solid rgba(var(--acc-rgb),.5);background:transparent;color:var(--text);font:500 .85rem var(--f-body)}.pbx:hover{background:var(--accent);color:var(--on-acc)}
+#projects .fp,#projects .pi{transition:opacity .4s,filter .4s,border-color .4s}
+#projects.focus .fp:not(.hl),#projects.focus .pi:not(.hl){opacity:.25;filter:grayscale(.7)}
+#projects.focus .fp.hl{border-color:rgba(var(--acc-rgb),.6)}
+#projects.focus .pi.hl h3{color:var(--accent)}
+@media (max-width:900px){.core{grid-template-columns:repeat(2,minmax(0,1fr))}.sk,.sk:nth-child(n+4){grid-column:span 1}.sk:last-child{grid-column:1/-1}}
+@media (max-width:640px){.core{grid-template-columns:1fr}.sk:last-child{grid-column:auto}.srow{grid-template-columns:1fr;gap:8px}}
+
+[hidden]{display:none!important}
+/* ===== case-study drawer ===== */
+.csb{align-self:flex-start;min-height:40px!important;padding:0;border:0;background:none;color:var(--accent);font:500 .9rem var(--f-body);border-bottom:1px solid rgba(var(--acc-rgb),.35);position:relative;z-index:2}
+.csb:hover{border-color:var(--accent)}.csb span{display:inline-block;transition:transform .25s}.csb:hover span{transform:translateX(4px)}
+.csback{position:fixed;inset:0;z-index:60;background:rgba(var(--bg-rgb),.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity .35s}
+.csback.on{opacity:1}
+.csd{position:fixed;top:0;right:0;bottom:0;z-index:61;width:min(600px,100%);background:rgb(var(--panel-rgb));border-left:1px solid var(--glass-b);box-shadow:-40px 0 80px -20px rgba(0,0,0,.6);overflow-y:auto;overscroll-behavior:contain;transform:translateX(100%);transition:transform .45s cubic-bezier(.2,.8,.2,1);padding:calc(24px + env(safe-area-inset-top,0px)) max(24px,env(safe-area-inset-right,0px)) calc(32px + env(safe-area-inset-bottom,0px)) 32px}
+.csd.on{transform:none}
+.csd:focus{outline:none}
+.csin{display:flex;flex-direction:column;gap:22px}
+.cstop{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.cstag{font-size:.72rem;color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+.csx{width:44px;height:44px;border-radius:50%;border:1px solid var(--glass-b);background:var(--glass);color:var(--text);font-size:1rem}
+.csx:hover{border-color:var(--accent)}
+.csd h2{font-size:clamp(1.6rem,4vw,2.2rem);margin:0;max-width:none}
+.cskpi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cskpi div{padding:16px;border-radius:14px;border:1px solid var(--glass-b);background:var(--glass)}
+.cskpi b{display:block;font:750 1.6rem/1.1 var(--f-display);font-stretch:112%;background:linear-gradient(100deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.cskpi span{color:var(--muted);font-size:.85rem}
+#csBody{display:flex;flex-direction:column;gap:28px}
+.csblk{display:flex;flex-direction:column;gap:8px}
+.csblk h3{font:500 .72rem var(--f-mono);text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin:0}
+.csblk p{margin:0;color:var(--text);opacity:.88}
+.csblk ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;color:var(--text);opacity:.88}
+.csblk li::marker{color:var(--accent)}
+.flow{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:0}
+.flow li{position:relative;padding:12px 16px;border-radius:12px;border:1px solid var(--glass-b);background:rgba(var(--bg-rgb),.5);font:500 .86rem var(--f-mono);color:var(--text)}
+.flow li+li{margin-top:22px}
+.flow li+li::before{content:"";position:absolute;left:24px;top:-23px;width:2px;height:22px;background:linear-gradient(var(--accent),var(--accent2))}
+.flow li+li::after{content:"";position:absolute;left:20px;top:-6px;border:5px solid transparent;border-top-color:var(--accent2)}
+.flow li:first-child{border-color:rgba(var(--acc-rgb),.5)}
+.cstech{display:flex;flex-wrap:wrap;gap:8px}
+.csnav{display:flex;justify-content:space-between;gap:12px;padding-top:12px;border-top:1px solid var(--line)}
+html.cs-open{overflow:hidden}
+/* ===== certifications ===== */
+.certs{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 40px;border-top:1px solid var(--line)}
+.cer{display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:16px;align-items:start;padding:20px 0;border-bottom:1px solid var(--line)}
+.cmb{width:48px;height:48px;border-radius:12px;display:grid;place-items:center;border:1px solid rgba(var(--acc-rgb),.4);background:rgba(var(--acc-rgb),.06);color:var(--accent);font:700 .78rem var(--f-display);font-stretch:118%}
+.cbd{min-width:0;display:flex;flex-direction:column;gap:3px}
+.cbd h3{font-size:1.02rem;line-height:1.3}
+.cis{font:400 .74rem var(--f-mono);color:var(--muted);letter-spacing:.04em}
+.cbd p{margin:4px 0 0;color:var(--muted);font-size:.88rem}
+.cvf{align-self:center;white-space:nowrap;padding:7px 14px;border-radius:999px;border:1px solid rgba(var(--acc-rgb),.5);color:var(--accent);text-decoration:none;font:500 .8rem var(--f-body);transition:background .2s,color .2s}
+.cvf:hover{background:var(--accent);color:var(--on-acc)}
+.cst{align-self:center;white-space:nowrap;font:500 .7rem var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:5px 10px;border-radius:8px;border:1px solid var(--glass-b)}
+@media (max-width:760px){.certs{grid-template-columns:1fr}}
+@media (max-width:420px){.cer{grid-template-columns:40px minmax(0,1fr)}.cmb{width:40px;height:40px}.cvf,.cst{grid-column:2;justify-self:start}}
+/* ===== contact tiles ===== */
+.ctiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:720px;margin:0 auto 24px;text-align:left}
+.ct{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto;column-gap:12px;align-items:center;padding:18px 20px;border-radius:16px;border:1px solid var(--glass-b);background:rgba(var(--bg-rgb),.35);text-decoration:none;color:var(--text);transition:border-color .2s,background .2s}
+.ct:hover{border-color:rgba(var(--acc-rgb),.5)}
+.ctl{grid-column:1;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--accent)}
+.ctv{grid-column:1;font:600 1rem var(--f-display);font-stretch:104%;overflow-wrap:anywhere;user-select:all}
+.lnk .ctv{user-select:auto}
+a.ctv{color:inherit;text-decoration:none}a.ctv:hover{color:var(--accent)}
+.cpy{grid-column:2;grid-row:1/3;min-height:40px!important;padding:0 16px;border-radius:999px;border:1px solid rgba(var(--acc-rgb),.5);background:transparent;color:var(--text);font:500 .85rem var(--f-body);transition:background .2s,color .2s}
+.cpy:hover,.cpy.ok{background:var(--accent);color:var(--on-acc)}
+@media (max-width:560px){.ctiles{grid-template-columns:1fr}.ctv{font-size:clamp(.82rem,3.6vw,1rem)}.ct{padding:16px}}
+/* ===== timeline fill ===== */
+.rail::before{opacity:.22!important}
+.rfill{position:absolute;left:21px;top:8px;bottom:8px;width:2px;background:linear-gradient(var(--accent),var(--accent2));transform-origin:top;border-radius:2px;pointer-events:none}
+.ev .mb{transition:background .4s,color .4s,box-shadow .4s,border-color .4s}
+.ev.lit .mb{background:var(--accent);color:var(--on-acc);border-color:var(--accent);box-shadow:0 0 0 5px var(--bg),0 0 22px rgba(var(--acc-rgb),.45)}
+/* ===== PCB trace (signature) ===== */
+main{position:relative}
+.trace{position:absolute;left:0;top:0;width:100%;pointer-events:none;z-index:-1;overflow:visible;display:none}
+.trace.on{display:block}
+.tr-base,.tr-live{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.tr-base{stroke:rgba(255,255,255,.07)}
+.tr-live{stroke:var(--accent);filter:drop-shadow(0 0 4px rgba(var(--acc-rgb),.55))}
+.via circle{fill:var(--bg);stroke:rgba(255,255,255,.18);stroke-width:2;transition:stroke .4s,fill .4s}
+.via circle.core{fill:rgba(255,255,255,.12);stroke:none}
+.via text{font:500 9px var(--f-mono);fill:var(--muted);letter-spacing:.08em;opacity:.55;transition:fill .4s,opacity .4s}
+.via.lit circle{stroke:var(--accent)}.via.lit circle.core{fill:var(--accent2)}
+.via.lit text{fill:var(--accent);opacity:1}
+
+/* ===== 3D tilt on project cards ===== */
+.fp.tilt{transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .3s,border-color .3s,opacity .4s,filter .4s;will-change:transform}
+.fp.tilt.on{box-shadow:0 30px 60px -28px rgba(0,0,0,.7),0 0 0 1px rgba(var(--acc-rgb),.35);border-color:rgba(var(--acc-rgb),.45)}
+.fp .glare{position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s;background:linear-gradient(115deg,transparent 30%,rgba(var(--acc2-rgb),.10) calc(var(--gx,50%) - 10%),rgba(255,255,255,.08) var(--gx,50%),transparent calc(var(--gx,50%) + 20%))}
+.fp.tilt.on .glare{opacity:1}
+/* ===== 3D lab ===== */
+.lab{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:40px;align-items:center}
+.lcap{display:flex;flex-direction:column;gap:28px;min-width:0}
+.lp{display:flex;flex-direction:column;gap:12px;min-height:300px}
+.lpi{font-size:.74rem;color:var(--accent);letter-spacing:.1em}
+.lp h3{font-size:clamp(1.5rem,2.6vw,2rem);font-stretch:110%}
+.lp p{margin:0;color:var(--muted);max-width:46ch}
+.lspec{margin:6px 0 0;border-top:1px solid var(--line)}
+.lspec div{display:grid;grid-template-columns:140px minmax(0,1fr);gap:14px;padding:10px 0;border-bottom:1px solid var(--line)}
+.lspec dt{font:500 .72rem var(--f-mono);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding-top:2px}
+.lspec dd{margin:0;font-size:.93rem}
+.lgo{margin-top:6px}
+.ltabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.lt{position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:10px 12px;min-height:56px;border-radius:14px;border:1px solid var(--glass-b);background:var(--glass);color:var(--muted);font:600 .86rem var(--f-display);font-stretch:110%;text-align:left;transition:border-color .2s,color .2s}
+.lt:hover{color:var(--text)}
+.ltn{font-size:.66rem;font-weight:400;opacity:.8}
+.lt[aria-pressed="true"]{color:var(--text);border-color:rgba(var(--acc-rgb),.55)}
+.ltp{position:absolute;left:0;bottom:0;height:2px;width:calc(var(--prog,0)*100%);background:linear-gradient(90deg,var(--accent),var(--accent2))}
+.stage{position:relative;aspect-ratio:5/4;max-width:100%;overflow:hidden;padding:0;background:radial-gradient(ellipse 70% 60% at 50% 55%,rgba(var(--acc-rgb),.08),transparent 70%),var(--glass);touch-action:pan-y;cursor:grab}
+.stage:active{cursor:grabbing}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.hud{position:absolute;font-size:.7rem;color:var(--muted);letter-spacing:.06em;pointer-events:none}
+.h1d{top:18px;left:40px}.h1d span:first-child{color:var(--accent)}
+.h2d{bottom:18px;right:40px}
+.nofx{position:absolute;inset:0;display:grid;place-items:center;margin:0;color:var(--muted)}
+@media (max-width:900px){.lab{grid-template-columns:1fr}.stage{order:-1;aspect-ratio:1}.lp{min-height:0}}
+@media (max-width:480px){.ltabs{grid-template-columns:repeat(2,minmax(0,1fr))}.lspec div{grid-template-columns:110px minmax(0,1fr)}}
+</style>
+<script>window.__EN={"Aller au contenu": "Skip to content", "Navigation principale": "Main navigation", "À propos": "About", "Projets": "Projects", "Parcours": "Experience", "Ouvrir le menu": "Open menu", "Fermer le menu": "Close menu", "Disponible · stage PFE · dès février 2027 · 6 mois": "Available · 6-month final-year internship · from February 2027", "Étudiant ingénieur en mécatronique. J'écris du code embarqué fiable, je conçois des cartes, je fais naviguer des robots. Du capteur au système complet.": "Mechatronics engineering student. I write reliable embedded code, design boards and make robots navigate. From the sensor to the complete system.", "Voir mes projets →": "See my projects →", "Me contacter": "Get in touch", "Télécharger mon CV": "Download my CV (FR)", "(nouvel onglet)": "(new tab)", "Portrait d'Amine Nsiri, souriant, en costume": "Portrait of Amine Nsiri, smiling, wearing a suit", "Élève-ingénieur en mécatronique · ENISo": "Mechatronics engineering student · ENISo", "Sousse, TN · PFE dès fév. 2027": "Sousse, TN · internship from Feb. 2027", "Sept. 2027": "Sept. 2027", "Diplôme d'ingénieur · ENISo": "Engineering degree · ENISo", "stages": "internships", "Embarqué, IoT et robotique · 2025–2026": "Embedded, IoT and robotics · 2025–2026", "ᵉ place": "nd place", "membres": "members", "Encadrés au sein d'ELECTRONICA CLUB": "Led at ELECTRONICA CLUB", "Là où le logiciel rencontre le matériel.": "Where software meets hardware.", "Je me forme à l'École Nationale d'Ingénieurs de Sousse. Mon terrain : drivers bas niveau, protocoles industriels, RTOS, Edge AI, puis la couche au-dessus avec ROS 2 et Gazebo.": "I study at the National Engineering School of Sousse (ENISo). My ground: low-level drivers, industrial protocols, RTOS and Edge AI, then the layer above with ROS 2 and Gazebo.", "Je préfère un système simple qui marche à une architecture brillante qui ne démarre pas. Je teste, je documente, je recommence. Quatre stages en 2025 et 2026 m'ont appris à livrer, pas seulement à prototyper.": "I prefer a simple system that works to a brilliant architecture that never boots. I test, I document, I iterate. Four internships in 2025 and 2026 taught me to deliver, not just to prototype.", "Vice-président et Project Manager d'ELECTRONICA CLUB (mandat 2025–2026), j'encadre 25 membres sur plus de trois projets en parallèle : embarqué, IoT, IA. Je donne aussi des cours de maths, physique et technique à des élèves de bac et de prépa.": "As vice-president and project manager of ELECTRONICA CLUB (2025–2026), I lead 25 members across more than three parallel projects: embedded, IoT and AI. I also tutor high-school and preparatory-class students in maths, physics and engineering.", "Formation": "Education", "Cycle ingénieur Mécatronique · ENISo": "Mechatronics engineering degree · ENISo", "Avant": "Before", "Basé à": "Based in", "Sousse, Tunisie": "Sousse, Tunisia", "Langues": "Languages", "Arabe (langue maternelle) · Français (C1) · Anglais (B2)": "Arabic (native) · French (C1) · English (B2)", "Disponibilité": "Availability", "Février 2027 · 6 mois": "February 2027 · 6 months", "Hors écran": "Off screen", "Lecture, podcasts et TED, parfums orientaux, jeux mobiles": "Reading, podcasts and TED talks, oriental perfumes, mobile games", "Stack technique": "Tech stack", "Une boîte à outils complète.": "A complete toolbox.", "Systèmes embarqués": "Embedded systems", "C embarqué": "Embedded C", "Interruptions": "Interrupts", "Robotique & IA": "Robotics & AI", "Logique floue": "Fuzzy logic", "Régulation PID": "PID control", "Capteurs, protocoles & radio": "Sensors, protocols & radio", "Acquisition de capteurs": "Sensor acquisition", "Ethernet embarqué": "embedded Ethernet", "Électronique & mécatronique": "Electronics & mechatronics", "Électronique de puissance": "Power electronics", "Mécatronique avancée": "Advanced mechatronics", "Conception mécatronique": "Mechatronic design", "Commande avancée": "Advanced control", "Dimensionnement d'actionneurs": "Actuator sizing", "Validation de prototype": "Prototype validation", "Outils & données": "Tools & data", "Ce que j'ai construit.": "What I've built.", "Robotique · Vision": "Robotics · Vision", "En cours": "In progress", "Détection et suivi d'obstacles par vision": "Vision-based obstacle detection and tracking", "Le robot détecte et suit en temps réel les obstacles fixes et mobiles. La logique floue et un régulateur PID ajustent la vitesse des roues et la direction. Intégré sous ROS 2, simulé sous Gazebo pour comparer les stratégies de commande.": "The robot detects and tracks static and moving obstacles in real time. Fuzzy logic and a PID controller adjust wheel speed and heading. Integrated in ROS 2 and simulated in Gazebo to compare control strategies.", "Chaîne de traitement": "Processing pipeline", "Caméra": "Camera", "Suivi": "Tracking", "Logique floue + PID": "Fuzzy logic + PID", "Roues": "Wheels", "Robotique · Multi-agents": "Robotics · Multi-agent", "robots LMR coordonnés": "LMR robots coordinated", "Coordination de robots logistiques par LLM": "LLM-driven coordination of logistics robots", "Architecture distribuée : trajectoires multi-agents et résolution de conflits en temps réel. Gemini transforme une demande en langage naturel en missions et replanifie en cas d'imprévu.": "Distributed architecture: multi-agent path planning and real-time conflict resolution. Gemini turns natural-language requests into missions and replans when something unexpected happens.", "Embarqué · ELECTRONICA × ACTIA": "Embedded · ELECTRONICA × ACTIA", "d'écart de vitesse entre les moteurs": "speed deviation between the motors", "Synchronisation de deux moteurs brushless": "Speed synchronisation of two brushless motors", "Commande vectorielle (FOC) sur STSPIN32F0, boucle de régulation temps réel sous FreeRTOS, avec ACTIA Engineering.": "Field-oriented control (FOC) on STSPIN32F0 with a real-time control loop under FreeRTOS, with ACTIA Engineering.", "Edge AI · Stage AFRICARBON": "Edge AI · AFRICARBON internship", "de latence de transmission": "transmission latency", "Supervision du courant AC avec Edge AI": "AC current monitoring with Edge AI", "Capteur SCT-013, acquisition ADC, calcul de l'Irms sur fenêtre glissante, puis inférence locale sur la carte.": "SCT-013 sensor, ADC acquisition, sliding-window RMS current, then on-board inference.", "IoT industriel · Stage YUCCAINFO": "Industrial IoT · YUCCAINFO internship", "≈ 12 mois": "≈ 12 months", "d'autonomie par nœud · ≈ 98 % de paquets livrés": "battery life per node · ≈ 98 % packet delivery", "Réseau IIoT LoRaWAN basse consommation": "Low-power LoRaWAN IIoT network", "Nœuds STM32WLE5J8 / RAK3172, activation OTAA vers The Things Network, visualisation sous Node-RED.": "STM32WLE5J8 / RAK3172 nodes, OTAA join to The Things Network, Node-RED dashboards.", "Autres réalisations": "More work", "Filtrer les projets": "Filter projects", "Tous": "All", "Robotique": "Robotics", "Embarqué": "Embedded", "Robot balayeur autonome": "Autonomous sweeper robot", "Stage AMSYS · 2026": "AMSYS internship · 2026", "SLAM et Nav2 sous ROS 2 / Gazebo, évitement d'obstacles réactif en environnement dynamique.": "SLAM and Nav2 in ROS 2 / Gazebo, reactive obstacle avoidance in a dynamic environment.", "Académique": "Academic", "Robot simulé sous Gazebo : perception, planification et navigation vers un but.": "Robot simulated in Gazebo: perception, planning and goal navigation.", "Robot suiveur de piste à caméra": "Camera-based line-following robot", "Traitement d'image pour détecter la piste, commande PWM des moteurs en boucle fermée, en C sur MCU NXP.": "Image processing to detect the track, closed-loop PWM motor control, in C on an NXP MCU.", "TP KUKA 6 axes et Scorbot-ER 9": "KUKA 6-axis and Scorbot-ER 9 lab", "Scorbot programmé sous SCORBASE : chemin de 5 points, deux trajets linéaires et un circulaire.": "Scorbot programmed in SCORBASE: a 5-point path with two linear moves and one circular move.", "ECPP 2.0 · 2ᵉ place": "ECPP 2.0 · 2nd place", "Programmation STM32F407VGT6 : GPIO, ADC, DMA, UART, SPI et CAN.": "STM32F407VGT6 programming: GPIO, ADC, DMA, UART, SPI and CAN.", "Firmware de supervision de production": "Production monitoring firmware", "Firmware C sur ESP32-C6 : files d'attente et sécurisation des données de production.": "C firmware on ESP32-C6: queue management and secure handling of production data.", "Variation de vitesse d'un moteur DC": "DC motor speed control", "Projet · 2024": "Project · 2024", "Commande PWM depuis une STM32, demi-pont IR2103 et MOSFET IRFZ44N.": "PWM control from an STM32, IR2103 half-bridge and IRFZ44N MOSFETs.", "Plateforme domotique connectée": "Connected home-automation platform", "Stage CSF Groupe · 2026": "CSF Groupe internship · 2026", "STM32, MQTT sur WiFi, Node-RED et application Flutter : mesures, commande à distance, temps réel.": "STM32, MQTT over WiFi, Node-RED and a Flutter app: measurements, remote control, real time.", "Comparatif de capteurs emonTH": "emonTH sensor comparison", "Étude de capteurs de température et d'humidité : DS18B20, DHT22, Si7021, SHT4x.": "Study of temperature and humidity sensors: DS18B20, DHT22, Si7021, SHT4x.", "Dashboard logistique Power BI": "Power BI logistics dashboard", "Tableau de bord multi-pages, schéma en étoile et mesures DAX.": "Multi-page dashboard, star schema and DAX measures.", "Sites vitrine et e-commerce": "Showcase and e-commerce websites", "Portfolio de photographe, site de concessionnaire automobile et boutique en ligne.": "A photographer's portfolio, a car dealership site and an online store.", "Expérience et engagement.": "Experience and involvement.", "Expérience professionnelle": "Professional experience", "Stage": "Internship", "Août – oct. 2026": "Aug – Oct 2026", "Août 2026": "Aug 2026", "Juil. – août 2026": "Jul – Aug 2026", "Juin – juil. 2026": "Jun – Jul 2026", "Juin – août 2025": "Jun – Aug 2025", "Oct. 2026": "Oct 2026", "Stagiaire Robotique & Systèmes embarqués": "Robotics & Embedded Systems Intern", "Robot balayeur autonome modélisé et simulé sous ROS 2 / Gazebo. Navigation SLAM (Nav2) optimisée, évitement d'obstacles réactif en environnement dynamique, intégration des capteurs.": "Modelled and simulated an autonomous sweeper robot in ROS 2 / Gazebo. Optimised SLAM navigation (Nav2), reactive obstacle avoidance in a dynamic environment, sensor integration.", "Recruteur-sélectionneur": "Candidate selection officer", "Sélection des candidats d'un programme de formation AWS, en partenariat avec CSF.": "Selected candidates for an AWS training programme, in partnership with CSF.", "Stagiaire Systèmes embarqués & Edge AI": "Embedded Systems & Edge AI Intern", "Supervision IoT du courant AC (SCT-013) : acquisition ADC, conditionnement analogique, Irms sur fenêtre glissante. Inférence Edge AI locale, latence de transmission réduite d'environ 40 %.": "IoT monitoring of AC current (SCT-013): ADC acquisition, analog conditioning, sliding-window RMS. Local Edge AI inference cut transmission latency by about 40 %.", "Stagiaire Systèmes embarqués & IoT": "Embedded Systems & IoT Intern", "Plateforme domotique connectée (STM32, MQTT, WiFi, Node-RED) et application mobile Flutter. Latence de réponse optimisée.": "Connected home-automation platform (STM32, MQTT, WiFi, Node-RED) and a Flutter mobile app. Optimised response latency.", "Stagiaire Systèmes embarqués": "Embedded Systems Intern", "Réseau IIoT LoRaWAN basse consommation (STM32WLE5J8 / RAK3172, OTAA vers TTN) : environ 12 mois d'autonomie par nœud, environ 98 % de paquets livrés.": "Low-power LoRaWAN IIoT network (STM32WLE5J8 / RAK3172, OTAA to TTN): about 12 months of battery life per node, about 98 % packet delivery.", "Engagement & formation": "Involvement & education", "Associatif": "Student club", "Vice-président & chef de projet": "Vice-president & project lead", "Club d'électronique embarquée. Encadrement de 25 membres sur plus de trois projets en parallèle (embarqué, IoT, IA).": "Embedded electronics club. Led 25 members across more than three parallel projects (embedded, IoT, AI).", "Depuis 2026": "Since 2026", "Membre fondateur": "Founding member", "Équipe fondatrice du club d'activités de volontariat de l'ENISo.": "Founding team of ENISo's volunteering club.", "Depuis sept. 2025": "Since Sept. 2025", "Membre actif": "Active member", "En parallèle": "Ongoing", "Enseignement": "Teaching", "Tutorat": "Tutoring", "Bac et classes préparatoires": "High school and preparatory classes", "Cours de mathématiques, physique et matières techniques.": "Maths, physics and engineering lessons.", "2024 – sept. 2027": "2024 – Sept. 2027", "Cycle ingénieur en mécatronique": "Mechatronics engineering degree", "École Nationale d'Ingénieurs de Sousse.": "National Engineering School of Sousse.", "Classes préparatoires Physique-Technologie": "Preparatory classes, Physics-Technology track", "Toujours en train d'apprendre.": "Always learning.", "Utiliser l'IA pour rédiger, analyser et déboguer du code.": "Using AI to write, analyse and debug code.", "Vérifier ↗": "Verify ↗", "Développement agentique : explorer, modifier et tester du code.": "Agentic development: exploring, editing and testing code.", "Examen réussi.": "Exam passed.", "Badge obtenu.": "Badge earned.", "Data Science et introduction à l'IA": "Data science and introduction to AI", "Un stage, une mission, une idée ?": "An internship, a project, an idea?", "Je réponds vite. Écrivez-moi, ou appelez si c'est plus simple.": "I reply quickly. Write to me, or call if that's easier.", "Nom": "Name", "Envoyer le message": "Send message", "ou directement :": "or directly:", "Ingénieur mécatronique. Systèmes embarqués et robotique. Sousse, Tunisie.": "Mechatronics engineer. Embedded systems and robotics. Sousse, Tunisia.", "© 2026 Amine. Tous droits réservés.": "© 2026 Amine. All rights reserved.", "Haut de page ↑": "Back to top ↑", "Indiquez votre nom (2 caractères minimum).": "Enter your name (at least 2 characters).", "Entrez une adresse email valide.": "Enter a valid email address.", "Votre message est trop court (10 caractères minimum).": "Your message is too short (at least 10 characters).", "Corrigez les champs signalés avant l’envoi.": "Fix the highlighted fields before sending.", "Votre messagerie s’ouvre avec le message prêt à envoyer. Sinon, écrivez à aminensiri.ing@gmail.com.": "Your email app opens with the message ready to send. If it doesn't, write to aminensiri.ing@gmail.com.", "Langue du site": "Site language", "__title": "Amine — Mechatronics Engineer · Embedded & Robotics", "__h1": "From firmware<br>to <span>autonomous robots.</span>", "STM32 & FreeRTOS": "STM32 & FreeRTOS", "ROS 2 & navigation": "ROS 2 & navigation", "Protocoles & IoT": "Protocols & IoT", "Vision & IA embarquée": "Vision & embedded AI", "Électronique & commande": "Electronics & control", "FOC · PWM · puissance": "FOC · PWM · power", "Firmware temps réel": "Real-time firmware", "d'écart de vitesse · moteurs FOC": "speed deviation · FOC motors", "2ᵉ place": "2nd place", "Hackathon ECPP 2.0 · STM32F407": "ECPP 2.0 hackathon · STM32F407", "2 stages": "2 internships", "sur STM32 · CSF Groupe, YUCCAINFO": "on STM32 · CSF Groupe, YUCCAINFO", "Voir les projets liés": "See related projects", "Robotique autonome": "Autonomous robotics", "coordonnés par LLM · LMR": "coordinated by an LLM · LMR", "robot balayeur · stage AMSYS": "sweeper robot · AMSYS internship", "évitement d'obstacles · en cours": "obstacle avoidance · in progress", "IoT industriel": "Industrial IoT", "d'autonomie par nœud LoRaWAN": "battery life per LoRaWAN node", "de paquets livrés · YUCCAINFO": "packet delivery · YUCCAINFO", "plateforme domotique · CSF": "home-automation platform · CSF", "IA embarquée": "Embedded AI", "de latence · Edge AI chez AFRICARBON": "latency · Edge AI at AFRICARBON", "détection d'obstacles en temps réel": "real-time obstacle detection", "missions en langage naturel": "natural-language missions", "STSPIN32F0 · avec ACTIA Engineering": "STSPIN32F0 · with ACTIA Engineering", "demi-pont · moteur DC": "half-bridge · DC motor", "Altium Designer · KiCad": "Altium Designer · KiCad", "interruptions": "interrupts", "logique floue": "fuzzy logic", "régulation PID": "PID control", "acquisition de capteurs": "sensor acquisition", "électronique de puissance": "power electronics", "conception mécatronique": "mechatronic design", "commande avancée": "advanced control", "dimensionnement d'actionneurs": "actuator sizing", "validation de prototype": "prototype validation", "Protocoles & radio": "Protocols & radio", "Électronique": "Electronics", "Mécatronique": "Mechatronics", "Ce que je maîtrise, preuves à l'appui.": "What I master, with proof.", "Fiche technique complète": "Full spec sheet", "Les éléments soulignés mènent aux projets.": "Underlined items lead to the projects.", "Projets liés à :": "Projects using:", "Tout afficher": "Show all", "Robot mobile autonome": "Autonomous mobile robot", "Navigation SLAM, évitement d'obstacles et levage de charges, comme les robots LMR de mon projet multi-agents.": "SLAM navigation, obstacle avoidance and load lifting, like the LMR robots in my multi-agent project.", "Pile logicielle": "Software stack", "Perception": "Perception", "LiDAR · caméra · YOLO": "LiDAR · camera · YOLO", "Simulation": "Simulation", "Bras manipulateur 6 axes": "6-axis robot arm", "Trajectoires point à point, linéaires et circulaires, programmées sur robots industriels.": "Point-to-point, linear and circular paths programmed on industrial robots.", "Robots": "Robots", "Logiciel": "Software", "Commande": "Control", "cinématique · trajectoires": "kinematics · trajectories", "Carte de développement STM32": "STM32 development board", "Le cœur de mes projets embarqués : firmware temps réel, périphériques et bus de terrain.": "The core of my embedded projects: real-time firmware, peripherals and field buses.", "Microcontrôleur": "Microcontroller", "Temps réel": "Real time", "Bus": "Buses", "Moteur brushless et commande FOC": "Brushless motor and FOC", "Commande vectorielle de deux moteurs synchronisés, développée avec ACTIA Engineering.": "Field-oriented control of two synchronised motors, built with ACTIA Engineering.", "Driver": "Driver", "Boucle": "Loop", "régulation temps réel · FreeRTOS": "real-time control · FreeRTOS", "Résultat": "Result", "< 2 % d'écart de vitesse": "< 2 % speed deviation", "Atelier 3D": "3D workshop", "Du robot à la carte, point par point.": "From robot to board, point by point.", "Choisir un modèle 3D": "Choose a 3D model", "Modèle 3D en nuage de points, qui passe d'un robot mobile à un bras, une carte STM32 puis un moteur": "Point-cloud 3D model morphing from a mobile robot to an arm, an STM32 board and a motor", "Glisser pour pivoter": "Drag to rotate", "Lire l'étude de cas": "Read the case study", "Fermer l'étude de cas": "Close the case study", "Contexte": "Context", "Objectif": "Goal", "Ce que j'ai fait": "What I did", "Architecture": "Architecture", "Technologies": "Technologies", "← Précédent": "← Previous", "Suivant →": "Next →", "Examen réussi": "Exam passed", "Badge obtenu": "Badge earned", "GCI World · International Program": "GCI World · International Program", "Copier": "Copy", "Téléphone": "Phone", "Adresse copiée dans le presse-papiers.": "Address copied to the clipboard.", "Numéro copié dans le presse-papiers.": "Number copied to the clipboard.", "Copié ✓": "Copied ✓", "Sélectionnez le texte puis copiez-le (Ctrl+C).": "Select the text and copy it (Ctrl+C)."};window.__lang="fr";try{var _l=localStorage.getItem("lang");if(_l==="en"||_l==="fr")window.__lang=_l;else if(!/^fr/i.test(navigator.language||"fr"))window.__lang="en"}catch(e){}window.__t=function(k){return window.__lang==="en"&&window.__EN[k]||k};</script>
+</head>
+<body>
+<a class="skip" href="#top">Aller au contenu</a>
+<div class="bg" aria-hidden="true"><div class="orb o1"></div><div class="orb o2"></div></div>
+<header><nav aria-label="Navigation principale">
+<a class="logo" href="#top">amine<i>.</i>dev</a>
+<ul id="menu"><li><a href="#about">À propos</a></li><li><a href="#skills">Stack</a></li><li><a href="#projects">Projets</a></li><li><a href="#experience">Parcours</a></li></ul>
+<div class="navr"><div class="lang" role="group" aria-label="Langue du site"><button type="button" class="lb" data-l="fr" aria-pressed="true" lang="fr">FR</button><button type="button" class="lb" data-l="en" aria-pressed="false" lang="en">EN</button></div><a class="btn sm" href="#contact">Contact</a><button class="menu-btn" id="menuBtn" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button></div>
+</nav></header>
+
+<main id="top">
+<svg class="trace" id="trace" aria-hidden="true" focusable="false"><path class="tr-base" id="trBase"/><path class="tr-live" id="trLive"/><g id="trVias"></g></svg>
+<div class="hero"><canvas class="rays" id="rays" aria-hidden="true"></canvas><div class="wrap">
+<div>
+<div class="pill mono"><span class="dot" aria-hidden="true"></span>Disponible · stage PFE · dès février 2027 · 6 mois</div>
+<h1>Du firmware<br>au <span>robot autonome.</span></h1>
+<p class="lead">Étudiant ingénieur en mécatronique. J'écris du code embarqué fiable, je conçois des cartes, je fais naviguer des robots. Du capteur au système complet.</p>
+<div class="cta"><span class="star"><a class="btn" href="#projects">Voir mes projets →</a></span><a class="btn ghost" href="#contact">Me contacter</a><a class="btn ghost dl" href="CV_Amine_Nsiri.pdf" download="CV_Amine_Nsiri.pdf">Télécharger mon CV</a></div>
+<div class="social"><a href="https://github.com/AmineNsiri001" target="_blank" rel="noopener noreferrer">GitHub ↗<span class="sr"> (nouvel onglet)</span></a><a href="https://www.linkedin.com/in/amine-nsiri/" target="_blank" rel="noopener noreferrer">LinkedIn ↗<span class="sr"> (nouvel onglet)</span></a></div>
+</div>
+<figure class="portrait">
+<div class="pframe"><img src="data:image/jpeg;base64,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" alt="Portrait d'Amine Nsiri, souriant, en costume" width="400" height="400" decoding="async"><span class="cm c1"></span><span class="cm c2"></span><span class="cm c3"></span><span class="cm c4"></span></div>
+<span class="ptag pt1 mono"><span class="dot" aria-hidden="true"></span>STM32 · FreeRTOS</span>
+<span class="ptag pt2 mono">ROS 2 · Nav2</span>
+<figcaption class="idc"><b>Amine Nsiri</b><span>Élève-ingénieur en mécatronique · ENISo</span><span class="mono idm">Sousse, TN · PFE dès fév. 2027</span></figcaption>
+</figure>
+</div></div>
+
+<section><div class="wrap r"><div class="stats">
+<div class="glass stat"><b>Sept. 2027</b><span>Diplôme d'ingénieur · ENISo</span></div>
+<div class="glass stat"><b><span class="cu" data-to="4">4</span> stages</b><span>Embarqué, IoT et robotique · 2025–2026</span></div>
+<div class="glass stat"><b><span class="cu" data-to="2">2</span>ᵉ place</b><span>Hackathon ECPP 2.0 · STM32</span></div>
+<div class="glass stat"><b><span class="cu" data-to="25">25</span> membres</b><span>Encadrés au sein d'ELECTRONICA CLUB</span></div>
+</div></div></section>
+
+<section id="about"><div class="wrap r">
+<div class="eyebrow">À propos</div><h2>Là où le logiciel rencontre le matériel.</h2>
+<div class="about">
+<div>
+<p>Je me forme à l'École Nationale d'Ingénieurs de Sousse. Mon terrain : drivers bas niveau, protocoles industriels, RTOS, Edge AI, puis la couche au-dessus avec ROS 2 et Gazebo.</p>
+<p>Je préfère un système simple qui marche à une architecture brillante qui ne démarre pas. Je teste, je documente, je recommence. Quatre stages en 2025 et 2026 m'ont appris à livrer, pas seulement à prototyper.</p>
+<p>Vice-président et Project Manager d'ELECTRONICA CLUB (mandat 2025–2026), j'encadre 25 membres sur plus de trois projets en parallèle : embarqué, IoT, IA. Je donne aussi des cours de maths, physique et technique à des élèves de bac et de prépa.</p>
+</div>
+<div class="glass facts">
+<div><small>Formation</small>Cycle ingénieur Mécatronique · ENISo</div>
+<div><small>Avant</small>IPEI Monastir</div>
+<div><small>Basé à</small>Sousse, Tunisie</div>
+<div><small>Langues</small>Arabe (langue maternelle) · Français (C1) · Anglais (B2)</div>
+<div><small>Disponibilité</small>Février 2027 · 6 mois</div>
+<div><small>Hors écran</small>Lecture, podcasts et TED, parfums orientaux, jeux mobiles</div>
+</div>
+</div></div></section>
+
+<section id="skills"><div class="wrap r">
+<div class="eyebrow">Stack technique</div><h2>Ce que je maîtrise, preuves à l'appui.</h2>
+<div class="core">
+<article class="glass sk" data-skill="stm"><span class="skd">Firmware temps réel</span><h3>STM32 · FreeRTOS</h3><ul class="proofs"><li><b>< 2 %</b><span>d'écart de vitesse · moteurs FOC</span></li><li><b>2ᵉ place</b><span>Hackathon ECPP 2.0 · STM32F407</span></li><li><b>2 stages</b><span>sur STM32 · CSF Groupe, YUCCAINFO</span></li></ul><button type="button" class="skl" data-skill="stm">Voir les projets liés <span class="skc"></span> →</button></article>
+<article class="glass sk" data-skill="ros"><span class="skd">Robotique autonome</span><h3>ROS 2 · Nav2 · SLAM</h3><ul class="proofs"><li><b>4 robots</b><span>coordonnés par LLM · LMR</span></li><li><b>SLAM</b><span>robot balayeur · stage AMSYS</span></li><li><b>YOLO + PID</b><span>évitement d'obstacles · en cours</span></li></ul><button type="button" class="skl" data-skill="ros">Voir les projets liés <span class="skc"></span> →</button></article>
+<article class="glass sk" data-skill="iot"><span class="skd">IoT industriel</span><h3>LoRaWAN · MQTT · CAN</h3><ul class="proofs"><li><b>≈ 12 mois</b><span>d'autonomie par nœud LoRaWAN</span></li><li><b>≈ 98 %</b><span>de paquets livrés · YUCCAINFO</span></li><li><b>MQTT</b><span>plateforme domotique · CSF</span></li></ul><button type="button" class="skl" data-skill="iot">Voir les projets liés <span class="skc"></span> →</button></article>
+<article class="glass sk" data-skill="ai"><span class="skd">IA embarquée</span><h3>Vision · Edge AI · LLM</h3><ul class="proofs"><li><b>≈ −40 %</b><span>de latence · Edge AI chez AFRICARBON</span></li><li><b>OpenCV · YOLO</b><span>détection d'obstacles en temps réel</span></li><li><b>Gemini</b><span>missions en langage naturel</span></li></ul><button type="button" class="skl" data-skill="ai">Voir les projets liés <span class="skc"></span> →</button></article>
+<article class="glass sk" data-skill="ctl"><span class="skd">Électronique & commande</span><h3>FOC · PWM · puissance</h3><ul class="proofs"><li><b>FOC</b><span>STSPIN32F0 · avec ACTIA Engineering</span></li><li><b>IR2103</b><span>demi-pont · moteur DC</span></li><li><b>PCB</b><span>Altium Designer · KiCad</span></li></ul><button type="button" class="skl" data-skill="ctl">Voir les projets liés <span class="skc"></span> →</button></article>
+</div>
+<div class="spec"><div class="spech"><h3 class="sub">Fiche technique complète</h3><p class="hint"><span class="hk" aria-hidden="true"></span>Les éléments soulignés mènent aux projets.</p></div>
+<dl class="sheet">
+<div class="srow"><dt>Embarqué</dt><dd><span class="si">C embarqué</span><span class="si">C++</span><button type="button" class="si lk" data-skill="stm">STM32 (HAL, CubeMX)</button><span class="si">NXP MCUXpresso</span><button type="button" class="si lk" data-skill="stm">FreeRTOS</button><span class="si">ESP32</span><span class="si">ADC</span><span class="si">DMA</span><span class="si">interruptions</span><span class="si">bare-metal</span><span class="si">MISRA-C</span><span class="si">IAR</span></dd></div>
+<div class="srow"><dt>Robotique & IA</dt><dd><button type="button" class="si lk" data-skill="ros">ROS 2</button><button type="button" class="si lk" data-skill="ros">Nav2</button><button type="button" class="si lk" data-skill="ros">SLAM</button><button type="button" class="si lk" data-skill="ros">Gazebo</button><button type="button" class="si lk" data-skill="ai">OpenCV</button><button type="button" class="si lk" data-skill="ai">YOLO</button><span class="si">logique floue</span><span class="si">régulation PID</span><button type="button" class="si lk" data-skill="ai">LLM (Gemini)</button><button type="button" class="si lk" data-skill="ai">Edge AI</button><span class="si">Python</span><span class="si">Ubuntu 22.04</span></dd></div>
+<div class="srow"><dt>Protocoles & radio</dt><dd><span class="si">UART</span><span class="si">I2C</span><span class="si">SPI</span><button type="button" class="si lk" data-skill="iot">CAN</button><span class="si">CAN FD</span><span class="si">Ethernet embarqué</span><span class="si">BLE</span><button type="button" class="si lk" data-skill="iot">LoRaWAN</button><button type="button" class="si lk" data-skill="iot">MQTT</button><span class="si">WSN</span><button type="button" class="si lk" data-skill="iot">Node-RED</button><span class="si">acquisition de capteurs</span></dd></div>
+<div class="srow"><dt>Électronique</dt><dd><span class="si">Altium Designer</span><span class="si">KiCad</span><span class="si">PCB</span><span class="si">électronique de puissance</span><button type="button" class="si lk" data-skill="ctl">PWM</button><button type="button" class="si lk" data-skill="ctl">FOC</button><span class="si">oscilloscope</span><span class="si">Simulink</span><span class="si">VHDL</span></dd></div>
+<div class="srow"><dt>Mécatronique</dt><dd><span class="si">SolidWorks</span><span class="si">conception mécatronique</span><span class="si">commande avancée</span><span class="si">dimensionnement d'actionneurs</span><span class="si">validation de prototype</span></dd></div>
+<div class="srow"><dt>Outils & données</dt><dd><span class="si">Git / GitHub</span><span class="si">Power BI</span><span class="si">DAX</span><span class="si">Dart / Flutter</span><span class="si">LaTeX</span></dd></div>
+</dl></div>
+</div></section>
+
+<section id="lab"><div class="wrap r">
+<div class="eyebrow">Atelier 3D</div><h2>Du robot à la carte, point par point.</h2>
+<div class="lab">
+<div class="lcap"><div class="lp" data-i="0"><div class="lpi mono">01 / 04 · AMR</div><h3>Robot mobile autonome</h3><p>Navigation SLAM, évitement d'obstacles et levage de charges, comme les robots LMR de mon projet multi-agents.</p><dl class="lspec"><div><dt>Pile logicielle</dt><dd>ROS 2 · Nav2 · SLAM</dd></div><div><dt>Perception</dt><dd>LiDAR · caméra · YOLO</dd></div><div><dt>Simulation</dt><dd>Gazebo · Ubuntu 22.04</dd></div></dl><button type="button" class="skl lgo" data-skill="ros">Voir les projets liés →</button></div><div class="lp" data-i="1" hidden><div class="lpi mono">02 / 04 · ARM-6</div><h3>Bras manipulateur 6 axes</h3><p>Trajectoires point à point, linéaires et circulaires, programmées sur robots industriels.</p><dl class="lspec"><div><dt>Robots</dt><dd>KUKA 6 axes · Scorbot-ER 9</dd></div><div><dt>Logiciel</dt><dd>SCORBASE</dd></div><div><dt>Commande</dt><dd>cinématique · trajectoires</dd></div></dl><button type="button" class="skl lgo" data-filter="robot">Voir les projets liés →</button></div><div class="lp" data-i="2" hidden><div class="lpi mono">03 / 04 · MCU</div><h3>Carte de développement STM32</h3><p>Le cœur de mes projets embarqués : firmware temps réel, périphériques et bus de terrain.</p><dl class="lspec"><div><dt>Microcontrôleur</dt><dd>STM32 · Cortex-M</dd></div><div><dt>Temps réel</dt><dd>FreeRTOS · DMA · interruptions</dd></div><div><dt>Bus</dt><dd>UART · SPI · I2C · CAN</dd></div></dl><button type="button" class="skl lgo" data-skill="stm">Voir les projets liés →</button></div><div class="lp" data-i="3" hidden><div class="lpi mono">04 / 04 · BLDC</div><h3>Moteur brushless et commande FOC</h3><p>Commande vectorielle de deux moteurs synchronisés, développée avec ACTIA Engineering.</p><dl class="lspec"><div><dt>Driver</dt><dd>STSPIN32F0</dd></div><div><dt>Boucle</dt><dd>régulation temps réel · FreeRTOS</dd></div><div><dt>Résultat</dt><dd>< 2 % d'écart de vitesse</dd></div></dl><button type="button" class="skl lgo" data-skill="ctl">Voir les projets liés →</button></div>
+<div class="ltabs" role="group" aria-label="Choisir un modèle 3D"><button type="button" class="lt" data-i="0" aria-pressed="true"><span class="ltn mono">01</span><span>AMR</span><i class="ltp" aria-hidden="true"></i></button><button type="button" class="lt" data-i="1" aria-pressed="false"><span class="ltn mono">02</span><span>ARM-6</span><i class="ltp" aria-hidden="true"></i></button><button type="button" class="lt" data-i="2" aria-pressed="false"><span class="ltn mono">03</span><span>MCU</span><i class="ltp" aria-hidden="true"></i></button><button type="button" class="lt" data-i="3" aria-pressed="false"><span class="ltn mono">04</span><span>BLDC</span><i class="ltp" aria-hidden="true"></i></button></div></div>
+<div class="stage glass"><canvas id="labc" aria-label="Modèle 3D en nuage de points, qui passe d'un robot mobile à un bras, une carte STM32 puis un moteur" role="img"></canvas>
+<span class="cm c1"></span><span class="cm c2"></span><span class="cm c3"></span><span class="cm c4"></span>
+<div class="hud h1d mono"><span id="labcode">AMR</span> · <span id="labpts">0</span> pts</div>
+<div class="hud h2d mono">Glisser pour pivoter</div>
+<noscript><p class="nofx">3D</p></noscript></div>
+</div>
+</div></section>
+<section id="projects"><div class="wrap r">
+<div class="eyebrow">Projets</div><h2>Ce que j'ai construit.</h2>
+<div class="pbanner" id="pb" hidden><span>Projets liés à : <b id="pbn"></b></span><button type="button" class="pbx" id="pbx">Tout afficher ✕</button></div>
+<div class="feat">
+<article class="glass card proj fp wide" data-skills="ros ai"><div class="pm"><span class="cat">Robotique · Vision</span><span class="live"><span class="dot" aria-hidden="true"></span>En cours</span></div>
+<h3>Détection et suivi d'obstacles par vision</h3>
+<p>Le robot détecte et suit en temps réel les obstacles fixes et mobiles. La logique floue et un régulateur PID ajustent la vitesse des roues et la direction. Intégré sous ROS 2, simulé sous Gazebo pour comparer les stratégies de commande.</p>
+<ol class="pipe" aria-label="Chaîne de traitement"><li>Caméra</li><li>YOLO · OpenCV</li><li>Suivi</li><li>Logique floue + PID</li><li>Roues</li></ol>
+<button type="button" class="csb" data-case="vision">Lire l'étude de cas <span aria-hidden="true">→</span></button><div class="chips"><span>Python</span><span>C++</span><span>OpenCV</span><span>YOLO</span><span>ROS 2</span><span>Gazebo</span></div></article>
+<article class="glass card proj fp" data-skills="ros ai"><div class="pm"><span class="cat">Robotique · Multi-agents</span><span class="yr">Oct. 2026</span></div>
+<div class="kpi"><b>4</b><span>robots LMR coordonnés</span></div>
+<h3>Coordination de robots logistiques par LLM</h3>
+<p>Architecture distribuée : trajectoires multi-agents et résolution de conflits en temps réel. Gemini transforme une demande en langage naturel en missions et replanifie en cas d'imprévu.</p>
+<button type="button" class="csb" data-case="lmr">Lire l'étude de cas <span aria-hidden="true">→</span></button><div class="chips"><span>ROS 2</span><span>Gazebo</span><span>Python</span><span>C++</span><span>Gemini</span></div></article>
+<article class="glass card proj fp" data-skills="stm ctl"><div class="pm"><span class="cat">Embarqué · ELECTRONICA × ACTIA</span><span class="yr">2025</span></div>
+<div class="kpi"><b>&lt; 2 %</b><span>d'écart de vitesse entre les moteurs</span></div>
+<h3>Synchronisation de deux moteurs brushless</h3>
+<p>Commande vectorielle (FOC) sur STSPIN32F0, boucle de régulation temps réel sous FreeRTOS, avec ACTIA Engineering.</p>
+<button type="button" class="csb" data-case="foc">Lire l'étude de cas <span aria-hidden="true">→</span></button><div class="chips"><span>FOC</span><span>STSPIN32F0</span><span>FreeRTOS</span><span>C</span></div></article>
+<article class="glass card proj fp" data-skills="ai iot"><div class="pm"><span class="cat">Edge AI · Stage AFRICARBON</span><span class="yr">2026</span></div>
+<div class="kpi"><b>≈ −40 %</b><span>de latence de transmission</span></div>
+<h3>Supervision du courant AC avec Edge AI</h3>
+<p>Capteur SCT-013, acquisition ADC, calcul de l'Irms sur fenêtre glissante, puis inférence locale sur la carte.</p>
+<button type="button" class="csb" data-case="edge">Lire l'étude de cas <span aria-hidden="true">→</span></button><div class="chips"><span>SCT-013</span><span>ADC</span><span>Irms</span><span>Edge AI</span></div></article>
+<article class="glass card proj fp" data-skills="iot stm"><div class="pm"><span class="cat">IoT industriel · Stage YUCCAINFO</span><span class="yr">2025</span></div>
+<div class="kpi"><b>≈ 12 mois</b><span>d'autonomie par nœud · ≈ 98 % de paquets livrés</span></div>
+<h3>Réseau IIoT LoRaWAN basse consommation</h3>
+<p>Nœuds STM32WLE5J8 / RAK3172, activation OTAA vers The Things Network, visualisation sous Node-RED.</p>
+<button type="button" class="csb" data-case="lora">Lire l'étude de cas <span aria-hidden="true">→</span></button><div class="chips"><span>STM32WL</span><span>LoRaWAN</span><span>OTAA</span><span>TTN</span></div></article>
+</div>
+<div class="more"><div class="moreh"><h3 class="sub">Autres réalisations</h3><div class="pf" role="group" aria-label="Filtrer les projets"><button type="button" class="fb" data-f="all" aria-pressed="true">Tous <span class="fc"></span></button><button type="button" class="fb" data-f="robot" aria-pressed="false">Robotique <span class="fc"></span></button><button type="button" class="fb" data-f="emb" aria-pressed="false">Embarqué <span class="fc"></span></button><button type="button" class="fb" data-f="iot" aria-pressed="false">IoT <span class="fc"></span></button><button type="button" class="fb" data-f="data" aria-pressed="false">Data & web <span class="fc"></span></button></div></div>
+<ul class="plist">
+<li class="pi" data-cat="robot" data-skills="ros"><div class="pih"><h3>Robot balayeur autonome</h3><span class="pictx">Stage AMSYS · 2026</span></div><p>SLAM et Nav2 sous ROS 2 / Gazebo, évitement d'obstacles réactif en environnement dynamique.</p><div class="chips"><span>ROS 2</span><span>Nav2</span><span>SLAM</span></div></li>
+<li class="pi" data-cat="robot" data-skills="ros"><div class="pih"><h3><span lang="en">Autonomous Robot Simulation &amp; Navigation</span></h3><span class="pictx">Académique</span></div><p>Robot simulé sous Gazebo : perception, planification et navigation vers un but.</p><div class="chips"><span>ROS 2</span><span>Gazebo</span></div></li>
+<li class="pi" data-cat="robot" data-skills="ctl"><div class="pih"><h3>Robot suiveur de piste à caméra</h3><span class="pictx">NXP Cup · 2025</span></div><p>Traitement d'image pour détecter la piste, commande PWM des moteurs en boucle fermée, en C sur MCU NXP.</p><div class="chips"><span>C</span><span>MCUXpresso</span><span>PWM</span></div></li>
+<li class="pi" data-cat="robot"><div class="pih"><h3>TP KUKA 6 axes et Scorbot-ER 9</h3><span class="pictx">ENISo</span></div><p>Scorbot programmé sous SCORBASE : chemin de 5 points, deux trajets linéaires et un circulaire.</p><div class="chips"><span>KUKA</span><span>SCORBASE</span></div></li>
+<li class="pi" data-cat="emb" data-skills="stm iot"><div class="pih"><h3>ECPP 2.0 · 2ᵉ place</h3><span class="pictx">Hackathon · 2026</span></div><p>Programmation STM32F407VGT6 : GPIO, ADC, DMA, UART, SPI et CAN.</p><div class="chips"><span>STM32F407</span><span>CubeMX</span></div></li>
+<li class="pi" data-cat="emb" data-skills="iot"><div class="pih"><h3>Firmware de supervision de production</h3><span class="pictx">SOPAL · 2026</span></div><p>Firmware C sur ESP32-C6 : files d'attente et sécurisation des données de production.</p><div class="chips"><span>ESP32-C6</span><span>C</span></div></li>
+<li class="pi" data-cat="emb" data-skills="stm ctl"><div class="pih"><h3>Variation de vitesse d'un moteur DC</h3><span class="pictx">Projet · 2024</span></div><p>Commande PWM depuis une STM32, demi-pont IR2103 et MOSFET IRFZ44N.</p><div class="chips"><span>STM32</span><span>PWM</span><span>IR2103</span></div></li>
+<li class="pi" data-cat="iot" data-skills="stm iot"><div class="pih"><h3>Plateforme domotique connectée</h3><span class="pictx">Stage CSF Groupe · 2026</span></div><p>STM32, MQTT sur WiFi, Node-RED et application Flutter : mesures, commande à distance, temps réel.</p><div class="chips"><span>STM32</span><span>MQTT</span><span>Flutter</span></div></li>
+<li class="pi" data-cat="iot" data-skills="iot"><div class="pih"><h3>Comparatif de capteurs emonTH</h3><span class="pictx">OpenEnergyMonitor</span></div><p>Étude de capteurs de température et d'humidité : DS18B20, DHT22, Si7021, SHT4x.</p><div class="chips"><span>DS18B20</span><span>SHT4x</span></div></li>
+<li class="pi" data-cat="data"><div class="pih"><h3>Dashboard logistique Power BI</h3><span class="pictx">Ooredoo</span></div><p>Tableau de bord multi-pages, schéma en étoile et mesures DAX.</p><div class="chips"><span>Power BI</span><span>DAX</span></div></li>
+<li class="pi" data-cat="data"><div class="pih"><h3>Sites vitrine et e-commerce</h3><span class="pictx">Freelance</span></div><p>Portfolio de photographe, site de concessionnaire automobile et boutique en ligne.</p><div class="chips"><span>Web</span></div></li>
+</ul></div>
+</div></section>
+
+<section id="experience"><div class="wrap r">
+<div class="eyebrow">Parcours</div><h2>Expérience et engagement.</h2>
+<div class="tlx">
+<div class="tlg"><h3 class="sub">Expérience professionnelle</h3><ol class="rail">
+<li class="ev"><span class="mb" aria-hidden="true">AM</span><div class="evb"><div class="evm"><time>Août – oct. 2026</time><span class="tag">Stage</span></div><h4>Stagiaire Robotique &amp; Systèmes embarqués</h4><div class="org">AMSYS Consulting · Sousse</div><p>Robot balayeur autonome modélisé et simulé sous ROS 2 / Gazebo. Navigation SLAM (Nav2) optimisée, évitement d'obstacles réactif en environnement dynamique, intégration des capteurs.</p><div class="chips"><span>ROS 2</span><span>Nav2</span><span>Gazebo</span></div></div></li>
+<li class="ev"><span class="mb" aria-hidden="true">AWS</span><div class="evb"><div class="evm"><time>Août 2026</time><span class="tag">Mission</span></div><h4>Recruteur-sélectionneur</h4><div class="org">AWS Cloud Training · Centre Elife Sidi Bouzid</div><p>Sélection des candidats d'un programme de formation AWS, en partenariat avec CSF.</p></div></li>
+<li class="ev"><span class="mb" aria-hidden="true">AF</span><div class="evb"><div class="evm"><time>Juil. – août 2026</time><span class="tag">Stage</span></div><h4>Stagiaire Systèmes embarqués &amp; Edge AI</h4><div class="org">AFRICARBON · Sousse</div><p>Supervision IoT du courant AC (SCT-013) : acquisition ADC, conditionnement analogique, Irms sur fenêtre glissante. Inférence Edge AI locale, latence de transmission réduite d'environ 40 %.</p><div class="chips"><span>ADC</span><span>Edge AI</span></div></div></li>
+<li class="ev"><span class="mb" aria-hidden="true">CSF</span><div class="evb"><div class="evm"><time>Juin – juil. 2026</time><span class="tag">Stage</span></div><h4>Stagiaire Systèmes embarqués &amp; IoT</h4><div class="org">CSF Groupe · Sousse</div><p>Plateforme domotique connectée (STM32, MQTT, WiFi, Node-RED) et application mobile Flutter. Latence de réponse optimisée.</p><div class="chips"><span>STM32</span><span>MQTT</span><span>Flutter</span></div></div></li>
+<li class="ev"><span class="mb" aria-hidden="true">YI</span><div class="evb"><div class="evm"><time>Juin – août 2025</time><span class="tag">Stage</span></div><h4>Stagiaire Systèmes embarqués</h4><div class="org">YUCCAINFO · Sousse</div><p>Réseau IIoT LoRaWAN basse consommation (STM32WLE5J8 / RAK3172, OTAA vers TTN) : environ 12 mois d'autonomie par nœud, environ 98 % de paquets livrés.</p><div class="chips"><span>LoRaWAN</span><span>STM32WL</span></div></div></li>
+</ol></div>
+<div class="tlg"><h3 class="sub">Engagement &amp; formation</h3><ol class="rail">
+<li class="ev"><span class="mb" aria-hidden="true">EC</span><div class="evb"><div class="evm"><time>2025 – 2026</time><span class="tag">Associatif</span></div><h4>Vice-président &amp; chef de projet</h4><div class="org">ELECTRONICA CLUB · ENISo</div><p>Club d'électronique embarquée. Encadrement de 25 membres sur plus de trois projets en parallèle (embarqué, IoT, IA).</p></div></li>
+<li class="ev"><span class="mb" aria-hidden="true">SO</span><div class="evb"><div class="evm"><time>Depuis 2026</time><span class="tag">Associatif</span></div><h4>Membre fondateur</h4><div class="org">SOSVE ENISo</div><p>Équipe fondatrice du club d'activités de volontariat de l'ENISo.</p></div></li>
+<li class="ev"><span class="mb" aria-hidden="true">AI</span><div class="evb"><div class="evm"><time>Depuis sept. 2025</time><span class="tag">Associatif</span></div><h4>Membre actif</h4><div class="org">AIESEC</div></div></li>
+<li class="ev"><span class="mb" aria-hidden="true">TU</span><div class="evb"><div class="evm"><time>En parallèle</time><span class="tag">Enseignement</span></div><h4>Tutorat</h4><div class="org">Bac et classes préparatoires</div><p>Cours de mathématiques, physique et matières techniques.</p></div></li>
+<li class="ev"><span class="mb" aria-hidden="true">EN</span><div class="evb"><div class="evm"><time>2024 – sept. 2027</time><span class="tag">Formation</span></div><h4>Cycle ingénieur en mécatronique</h4><div class="org">ENISo · Sousse</div><p>École Nationale d'Ingénieurs de Sousse.</p></div></li>
+<li class="ev"><span class="mb" aria-hidden="true">IP</span><div class="evb"><div class="evm"><time>2022 – 2024</time><span class="tag">Formation</span></div><h4>Classes préparatoires Physique-Technologie</h4><div class="org">IPEI Monastir</div></div></li>
+</ol></div>
+</div>
+</div></div></section>
+
+<section id="certs"><div class="wrap r">
+<div class="eyebrow">Certifications</div><h2>Toujours en train d'apprendre.</h2>
+<ul class="certs">
+<li class="cer"><span class="cmb" aria-hidden="true">AN</span><div class="cbd"><h3 lang="en">Claude 101</h3><span class="cis">Anthropic</span><p>Utiliser l'IA pour rédiger, analyser et déboguer du code.</p></div><a class="cvf" href="https://academy.claude.com/verify/ef9be90dcea5eeda4ced052fbc72957a" target="_blank" rel="noopener noreferrer">Vérifier ↗<span class="sr"> (nouvel onglet)</span></a></li>
+<li class="cer"><span class="cmb" aria-hidden="true">AN</span><div class="cbd"><h3 lang="en">Claude Code 101</h3><span class="cis">Anthropic</span><p>Développement agentique : explorer, modifier et tester du code.</p></div><a class="cvf" href="https://academy.claude.com/verify/006a6f526a6e2e617904721b8ea0bee5" target="_blank" rel="noopener noreferrer">Vérifier ↗<span class="sr"> (nouvel onglet)</span></a></li>
+<li class="cer"><span class="cmb" aria-hidden="true">MS</span><div class="cbd"><h3 lang="en">Power BI Data Analyst (PL-300)</h3><span class="cis">Microsoft</span></div><span class="cst">Examen réussi</span></li>
+<li class="cer"><span class="cmb" aria-hidden="true">MS</span><div class="cbd"><h3 lang="en">AI Skills Fest 2026</h3><span class="cis">Microsoft · 2026</span></div><span class="cst">Badge obtenu</span></li>
+<li class="cer"><span class="cmb" aria-hidden="true">NV</span><div class="cbd"><h3 lang="en">Applications of AI for Predictive Maintenance</h3><span class="cis">NVIDIA · 2026</span></div></li>
+<li class="cer"><span class="cmb" aria-hidden="true">NV</span><div class="cbd"><h3 lang="en">Applications of AI for Anomaly Detection</h3><span class="cis">NVIDIA · 2026</span></div></li>
+<li class="cer"><span class="cmb" aria-hidden="true">365</span><div class="cbd"><h3 lang="en">Intro to AI Agents and Agentic AI</h3><span class="cis">365 Data Science</span></div></li>
+<li class="cer"><span class="cmb" aria-hidden="true">GCI</span><div class="cbd"><h3 lang="fr">Data Science et introduction à l'IA</h3><span class="cis">GCI World · International Program · 2026</span></div></li>
+<li class="cer"><span class="cmb" aria-hidden="true">TX</span><div class="cbd"><h3 lang="en">LaTeX / Overleaf</h3><span class="cis">TeachCode X</span></div></li>
+</ul>
+</div></div></section>
+
+<section id="contact"><div class="wrap r"><div class="glass contact">
+<div class="eyebrow">Contact</div>
+<h2>Un stage, une mission, une idée ?</h2>
+<p>Je réponds vite. Écrivez-moi, ou appelez si c'est plus simple.</p>
+<div class="ctiles">
+<div class="ct"><span class="ctl mono">Email</span><a class="ctv" href="mailto:aminensiri.ing@gmail.com">aminensiri.ing@gmail.com</a><button type="button" class="cpy" data-copy="aminensiri.ing@gmail.com" data-msg="Adresse copiée dans le presse-papiers.">Copier</button></div>
+<div class="ct"><span class="ctl mono">Téléphone</span><a class="ctv" href="tel:+21694685185">+216 94 685 185</a><button type="button" class="cpy" data-copy="+216 94 685 185" data-msg="Numéro copié dans le presse-papiers.">Copier</button></div>
+<a class="ct lnk" href="https://www.linkedin.com/in/amine-nsiri/" target="_blank" rel="noopener noreferrer"><span class="ctl mono">LinkedIn</span><span class="ctv">in/amine-nsiri ↗</span><span class="sr"> (nouvel onglet)</span></a>
+<a class="ct lnk" href="https://github.com/AmineNsiri001" target="_blank" rel="noopener noreferrer"><span class="ctl mono">GitHub</span><span class="ctv">AmineNsiri001 ↗</span><span class="sr"> (nouvel onglet)</span></a>
+</div>
+<div class="cta"><a class="btn dl" href="CV_Amine_Nsiri.pdf" download="CV_Amine_Nsiri.pdf">Télécharger mon CV</a></div>
+<div class="status" id="cs" role="status" aria-live="polite"></div>
+</div></div></section>
+</main>
+<div class="csback" id="csBack" hidden></div>
+<aside class="csd" id="csd" role="dialog" aria-modal="true" aria-labelledby="csTitle" hidden tabindex="-1" data-lenis-prevent>
+<div class="csin">
+<div class="cstop"><span class="cstag mono" id="csTag"></span><button type="button" class="csx" id="csX" aria-label="Fermer l'étude de cas">✕</button></div>
+<h2 id="csTitle"></h2>
+<div class="cskpi" id="csKpi"></div>
+<div id="csBody"></div>
+<div class="csnav"><button type="button" class="pbx" id="csPrev"></button><button type="button" class="pbx" id="csNext"></button></div>
+</div></aside>
+
+<footer><div class="wrap">
+<div class="fgrid">
+<div><a class="logo" href="#top">amine<i>.</i>dev</a><p>Ingénieur mécatronique. Systèmes embarqués et robotique. Sousse, Tunisie.</p></div>
+<div><div class="fh">Navigation</div><a href="#about">À propos</a><a href="#skills">Stack</a><a href="#projects">Projets</a><a href="#experience">Parcours</a></div>
+<div><div class="fh">Contact</div><a href="mailto:aminensiri.ing@gmail.com">aminensiri.ing@gmail.com</a><a href="tel:+21694685185">+216 94 685 185</a><a href="https://github.com/AmineNsiri001" target="_blank" rel="noopener noreferrer">GitHub ↗<span class="sr"> (nouvel onglet)</span></a><a href="https://www.linkedin.com/in/amine-nsiri/" target="_blank" rel="noopener noreferrer">LinkedIn ↗<span class="sr"> (nouvel onglet)</span></a></div>
+</div>
+<div class="fbot"><span>© 2026 Amine. Tous droits réservés.</span><a href="#top">Haut de page ↑</a></div>
+</div></footer>
+<script>
+try{var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.12});document.querySelectorAll('.r').forEach(function(el){io.observe(el)})}catch(e){document.querySelectorAll('.r').forEach(function(el){el.classList.add('in')})}
+</script>
+<script>
+(function(){
+var h=document.querySelector('header'),b=document.getElementById('menuBtn'),m=document.getElementById('menu');
+function setMenu(o){h.classList.toggle('open',o);b.setAttribute('aria-expanded',o?'true':'false');b.setAttribute('aria-label',o?__t('Fermer le menu'):__t('Ouvrir le menu'))}
+b.addEventListener('click',function(){setMenu(b.getAttribute('aria-expanded')!=='true')});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&h.classList.contains('open')){setMenu(false);b.focus()}});
+document.addEventListener('click',function(e){if(!h.contains(e.target))setMenu(false)});
+window.addEventListener('resize',function(){if(window.innerWidth>820)setMenu(false)});
+/* smooth scroll + focus management */
+document.addEventListener('click',function(e){var a=e.target.closest('a[href^="#"]');if(!a)return;var id=a.getAttribute('href').slice(1),t=id?document.getElementById(id):null;if(!t)return;e.preventDefault();setMenu(false);var red=window.matchMedia('(prefers-reduced-motion:reduce)').matches;if(window.__lenis&&!red){window.__lenis.scrollTo(t,{offset:-84})}else{t.scrollIntoView({behavior:red?'auto':'smooth',block:'start'})}t.setAttribute('tabindex','-1');t.focus({preventScroll:true});try{history.pushState(null,'','#'+id)}catch(x){}});
+/* active link */
+try{var links=[].slice.call(m.querySelectorAll('a')),map={};links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a});var so=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){links.forEach(function(a){a.removeAttribute('aria-current')});var a=map[x.target.id];if(a)a.setAttribute('aria-current','true')}})},{rootMargin:'-45% 0px -50% 0px'});Object.keys(map).forEach(function(id){var s=document.getElementById(id);if(s)so.observe(s)})}catch(x){}
+document.querySelectorAll('section[id]').forEach(function(s){var h2=s.querySelector('h2');if(h2){h2.id=s.id+'-title';s.setAttribute('aria-labelledby',h2.id)}});
+/* project card spotlight */
+document.querySelectorAll('.proj').forEach(function(c){c.addEventListener('pointermove',function(e){var r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px')})});
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Flip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.4/dist/lenis.min.js"></script>
+<script>
+(function(){
+var reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+if(reduce||!window.gsap||!window.ScrollTrigger)return;
+gsap.registerPlugin(ScrollTrigger);
+document.documentElement.classList.add('gs');
+
+/* 1. smooth scroll, driven by GSAP's ticker */
+try{if(window.Lenis){var lenis=new Lenis({duration:1.1,smoothWheel:true});window.__lenis=lenis;lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(function(t){lenis.raf(t*1000)});gsap.ticker.lagSmoothing(0)}}catch(e){}
+
+/* 2. hero: blur-text heading (one effect for the hero copy) */
+var h1=document.querySelector('.hero h1');
+if(h1){window.__h1fr=h1.innerHTML;(function wrap(node){[].slice.call(node.childNodes).forEach(function(n){if(n.nodeType===3){var f=document.createDocumentFragment();n.textContent.split(/(\s+)/).forEach(function(part){if(!part)return;if(/^\s+$/.test(part)){f.appendChild(document.createTextNode(part))}else{var sp=document.createElement('span');sp.className='w';sp.textContent=part;f.appendChild(sp)}});node.replaceChild(f,n)}else if(n.nodeType===1&&n.tagName!=='BR'){wrap(n)}})})(h1);
+gsap.from(h1.querySelectorAll('.w'),{filter:'blur(12px)',opacity:0,y:-18,duration:.9,ease:'power3.out',stagger:.09,delay:.15,clearProps:'filter,transform'})}
+
+/* 3. stats: count up once */
+document.querySelectorAll('.cu').forEach(function(el){var to=+el.getAttribute('data-to'),o={v:0};el.textContent='0';
+ScrollTrigger.create({trigger:el,start:'top 92%',once:true,onEnter:function(){gsap.to(o,{v:to,duration:1.4,ease:'power2.out',onUpdate:function(){el.textContent=Math.round(o.v)}})}})});
+
+/* 4. sections: one gentle reveal each; cards reveal in batches as they enter. Interrupted reveals snap to visible. */
+function show(t){gsap.set(t,{opacity:1,y:0})}
+function rise(t,y,d,st){return gsap.to(t,{opacity:1,y:0,duration:d,ease:'power3.out',stagger:st||0,overwrite:true,onInterrupt:function(){show(t)}})}
+document.querySelectorAll('section .wrap.r').forEach(function(sec){
+ sec.classList.add('in');
+ var cards=sec.querySelectorAll('.projects > .card, .rail > .ev, .feat > .card, .plist > .pi, .core > .sk, .lab, .certs > .cer, .ctiles > .ct');
+ if(cards.length){var head=sec.querySelectorAll('.eyebrow, h2');gsap.set(head,{opacity:0,y:24});ScrollTrigger.create({trigger:sec,start:'top 85%',once:true,onEnter:function(){rise(head,24,.8,.08)}});
+  gsap.set(cards,{opacity:0,y:36});ScrollTrigger.batch(cards,{start:'top 92%',once:true,onEnter:function(b){rise(b,36,.8,.07)}})}
+ else{gsap.set(sec,{opacity:0,y:32});ScrollTrigger.create({trigger:sec,start:'top 88%',once:true,onEnter:function(){rise(sec,32,.9)}})}
+});
+/* safety net: after scrolling settles, anything on screen still hidden with no tween running is shown */
+var sn=0;function sweep(){document.querySelectorAll('section [style*="opacity: 0"], section.r[style*="opacity: 0"], .wrap.r[style*="opacity: 0"]').forEach(function(el){if(gsap.getTweensOf(el).length)return;var r=el.getBoundingClientRect();if(r.top<innerHeight&&r.bottom>0&&!el.hidden)gsap.to(el,{opacity:1,y:0,duration:.5,ease:'power2.out'})})}
+function queue(){clearTimeout(sn);sn=setTimeout(sweep,350)}
+if(window.__lenis)window.__lenis.on('scroll',queue);window.addEventListener('scroll',queue,{passive:true});window.addEventListener('load',function(){setTimeout(sweep,1200)});
+document.querySelectorAll('.r.in .projects .card').forEach(function(c){c.style.animation='none'});
+
+/* 5. hero background: light rays in the site's own teal / sky colours */
+var cv=document.getElementById('rays'),gl=cv&&(cv.getContext('webgl',{premultipliedAlpha:false,alpha:true}));
+if(!gl)return;
+var vs='attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+var fs='precision mediump float;uniform vec2 r;uniform float t;uniform vec2 m;'+
+'float ray(vec2 src,vec2 dir,vec2 c,float a,float b,float sp){vec2 d=c-src;float ang=dot(normalize(d),dir);return clamp((.45+.15*sin(ang*a+t*sp))+(.3+.2*cos(-ang*b+t*sp)),0.,1.)*clamp((r.x-length(d))/r.x,.4,1.);}'+
+'void main(){vec2 c=vec2(gl_FragCoord.x,r.y-gl_FragCoord.y);vec2 src=vec2(r.x*.5,-r.y*.25);vec2 dir=normalize(vec2(m.x*.6-.3,1.));'+
+'float a=ray(src,dir,c,36.22,21.11,1.1);float b=ray(src,normalize(dir+vec2(.08,0.)),c,22.4,18.02,.9);'+
+'float fall=1.-smoothstep(0.,1.,c.y/r.y);vec3 col=mix(vec3(.910,.569,.353),vec3(.957,.780,.490),c.x/r.x);'+
+'float k=(a*.5+b*.4)*fall;gl_FragColor=vec4(col*k,k*.55);}';
+function sh(type,src){var o=gl.createShader(type);gl.shaderSource(o,src);gl.compileShader(o);return o}
+var pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,vs));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,fs));gl.linkProgram(pr);
+if(!gl.getProgramParameter(pr,gl.LINK_STATUS))return;gl.useProgram(pr);
+var buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+var loc=gl.getAttribLocation(pr,'p');gl.enableVertexAttribArray(loc);gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+var uR=gl.getUniformLocation(pr,'r'),uT=gl.getUniformLocation(pr,'t'),uM=gl.getUniformLocation(pr,'m'),mx=.5,tm=.5,vis=true;
+gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
+function size(){var d=Math.min(window.devicePixelRatio||1,1.5),w=cv.clientWidth,h=cv.clientHeight;cv.width=Math.max(1,w*d|0);cv.height=Math.max(1,h*d|0);gl.viewport(0,0,cv.width,cv.height)}
+size();window.addEventListener('resize',size);
+window.addEventListener('pointermove',function(e){tm=e.clientX/window.innerWidth});
+try{new IntersectionObserver(function(es){vis=es[0].isIntersecting}).observe(cv)}catch(e){}
+var t0=performance.now();gsap.ticker.add(function(){if(!vis)return;mx+=(tm-mx)*.04;gl.uniform2f(uR,cv.width,cv.height);gl.uniform1f(uT,(performance.now()-t0)/1000);gl.uniform2f(uM,mx,.5);gl.clear(gl.COLOR_BUFFER_BIT);gl.drawArrays(gl.TRIANGLES,0,3)});
+requestAnimationFrame(function(){cv.classList.add('on')});
+})();
+</script>
+<script>
+(function(){var bs=[].slice.call(document.querySelectorAll('.fb')),it=[].slice.call(document.querySelectorAll('.pi'));
+bs.forEach(function(b){var f=b.getAttribute('data-f');b.querySelector('.fc').textContent=f==='all'?it.length:it.filter(function(i){return i.getAttribute('data-cat')===f}).length;
+b.addEventListener('click',function(){var red=window.matchMedia('(prefers-reduced-motion:reduce)').matches,st=(window.Flip&&window.gsap&&!red)?Flip.getState(it,{props:'opacity'}):null;bs.forEach(function(x){x.setAttribute('aria-pressed',x===b?'true':'false')});it.forEach(function(i){i.hidden=!(f==='all'||i.getAttribute('data-cat')===f);if(!i.hidden){i.style.opacity='1';i.style.transform=''}});if(st){Flip.from(st,{duration:.6,ease:'power3.inOut',absolute:true,onEnter:function(e){return gsap.fromTo(e,{opacity:0,scale:.95},{opacity:1,scale:1,duration:.45,delay:.15})},onLeave:function(e){return gsap.to(e,{opacity:0,scale:.95,duration:.3})},onComplete:function(){if(window.ScrollTrigger)ScrollTrigger.refresh()}})}else if(window.ScrollTrigger)ScrollTrigger.refresh()})})})();
+</script>
+<script>
+window.__initLab=function(){
+var cv=document.getElementById('labc'),stage=cv&&cv.parentNode;if(!cv)return;
+var panels=[].slice.call(document.querySelectorAll('.lp')),tabs=[].slice.call(document.querySelectorAll('.lt')),codeEl=document.getElementById('labcode'),ptsEl=document.getElementById('labpts');
+var CODES=['AMR','ARM-6','MCU','BLDC'],cur=0;
+function showPanel(i){panels.forEach(function(p){p.hidden=+p.getAttribute('data-i')!==i});tabs.forEach(function(b){b.setAttribute('aria-pressed',+b.getAttribute('data-i')===i?'true':'false');b.style.setProperty('--prog',0)});codeEl.textContent=CODES[i];
+ var p=panels[i];if(window.gsap&&!reduce)gsap.from(p.children,{opacity:0,y:12,duration:.5,stagger:.05,ease:'power2.out',clearProps:'all'})}
+document.querySelectorAll('.lgo[data-filter]').forEach(function(b){b.addEventListener('click',function(){var f=document.querySelector('.fb[data-f="'+b.getAttribute('data-filter')+'"]');if(f)f.click();var sec=document.querySelector('.more')||document.getElementById('projects');if(window.__lenis)window.__lenis.scrollTo(sec,{offset:-100});else sec.scrollIntoView({behavior:'smooth'})})});
+var reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+if(!window.THREE){tabs.forEach(function(b){b.addEventListener('click',function(){cur=+b.getAttribute('data-i');showPanel(cur)})});return}
+var renderer;try{renderer=new THREE.WebGLRenderer({canvas:cv,antialias:false,alpha:true,powerPreference:'high-performance'})}catch(e){return}
+renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.75));renderer.setClearColor(0x000000,0);
+var scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(32,1,.1,100);cam.position.set(0,1.6,9);cam.lookAt(0,-.1,0);
+var small=window.innerWidth<700,N=small?4200:7200;
+
+/* ---- palette ---- */
+var C={cu:new THREE.Color(.91,.57,.35),br:new THREE.Color(.96,.78,.49),st:new THREE.Color(.62,.66,.76),dk:new THREE.Color(.34,.38,.5),wh:new THREE.Color(.96,.93,.88),bl:new THREE.Color(.42,.55,1)};
+/* ---- primitive helpers ---- */
+function part(g,geo,c,w,x,y,z,rx,ry,rz){var m=new THREE.Mesh(geo);m.position.set(x||0,y||0,z||0);m.rotation.set(rx||0,ry||0,rz||0);m.userData={c:c,w:w||1};g.add(m);return m}
+function box(g,w,h,d,c,wt,x,y,z,rx,ry,rz){return part(g,new THREE.BoxGeometry(w,h,d),c,wt,x,y,z,rx,ry,rz)}
+function cyl(g,rt,rb,h,c,wt,x,y,z,rx,ry,rz,seg){return part(g,new THREE.CylinderGeometry(rt,rb,h,seg||28,1),c,wt,x,y,z,rx,ry,rz)}
+function tor(g,r,tb,c,wt,x,y,z,rx,ry,rz){return part(g,new THREE.TorusGeometry(r,tb,10,40),c,wt,x,y,z,rx,ry,rz)}
+
+/* ---- models ---- */
+function amr(){var g=new THREE.Group();
+ box(g,2.4,.42,1.6,C.st,1,0,.38,0);box(g,2.2,.06,1.42,C.cu,1.6,0,.62,0);
+ box(g,1.9,.08,1.2,C.br,1.2,0,.84,0);for(var i=0;i<4;i++){var sx=i<2?-.8:.8,sz=i%2?-.5:.5;cyl(g,.05,.05,.2,C.dk,1,sx,.72,sz)}
+ [[-.85,.78],[.85,.78],[-.85,-.78],[.85,-.78]].forEach(function(p){cyl(g,.26,.26,.16,C.dk,1.4,p[0],.26,p[1],Math.PI/2);cyl(g,.12,.12,.18,C.cu,1,p[0],.26,p[1],Math.PI/2)});
+ cyl(g,.17,.2,.22,C.wh,2.2,.9,.98,0);cyl(g,.21,.21,.04,C.cu,2,.9,1.1,0);
+ box(g,.06,.2,.9,C.bl,2.5,1.23,.42,0);box(g,.1,.1,.24,C.wh,2.5,1.22,.6,.0);
+ /* shelf carried by the lift (LMR) */box(g,1.7,.05,1.25,C.dk,.5,0,1.75,0);[[-.8,-.58],[.8,-.58],[-.8,.58],[.8,.58]].forEach(function(q){box(g,.05,1.6,.05,C.dk,.9,q[0],1.0,q[1])});
+ return g}
+function arm(){var g=new THREE.Group();
+ cyl(g,.7,.8,.25,C.dk,1.2,0,0,0);cyl(g,.5,.55,.45,C.st,1,0,.35,0);
+ var s=new THREE.Group();s.position.set(0,.6,0);s.rotation.y=.5;g.add(s);
+ cyl(s,.32,.32,.5,C.cu,1.6,0,.1,0,Math.PI/2);
+ var u=new THREE.Group();u.position.set(0,.1,0);u.rotation.z=.35;s.add(u);box(u,.32,1.7,.38,C.st,1,0,.85,0);
+ cyl(u,.26,.26,.5,C.cu,1.6,0,1.7,0,Math.PI/2);
+ var f=new THREE.Group();f.position.set(0,1.7,0);f.rotation.z=-1.75;u.add(f);box(f,.26,1.45,.3,C.br,1,0,.72,0);
+ cyl(f,.18,.18,.36,C.cu,1.6,0,1.45,0,Math.PI/2);
+ var w=new THREE.Group();w.position.set(0,1.45,0);w.rotation.z=-.5;f.add(w);cyl(w,.13,.13,.35,C.st,1.4,0,.2,0);
+ box(w,.5,.08,.2,C.wh,2,0,.4,0);box(w,.07,.32,.16,C.wh,2.4,-.2,.58,0);box(w,.07,.32,.16,C.wh,2.4,.2,.58,0);
+ return g}
+function mcu(){var g=new THREE.Group();var W=3,D=1.9;
+ box(g,W,.08,D,C.dk,.32,0,0,0);
+ box(g,.78,.1,.78,C.wh,3,0,.09,0,0,Math.PI/4);/* MCU (rotated QFP) */
+ for(var k=0;k<4;k++){for(var j=-7;j<=7;j++){var a=k*Math.PI/2+Math.PI/4,ox=Math.cos(a)*.47,oz=Math.sin(a)*.47,tx=-Math.sin(a)*j*.045,tz=Math.cos(a)*j*.045;box(g,.05,.03,.02,C.br,1.2,ox+tx,.06,oz+tz,0,-a)}}
+ for(var r=0;r<2;r++)for(var i=0;i<19;i++){box(g,.07,.24,.07,C.br,1.4,-1.3+i*.144,.18,(r?-1:1)*(D/2-.12));box(g,.12,.08,.12,C.dk,.6,-1.3+i*.144,.07,(r?-1:1)*(D/2-.12))}
+ box(g,.42,.22,.5,C.st,2,-W/2+.15,.15,.1);/* USB */
+ box(g,.3,.12,.14,C.st,1.6,.85,.1,-.35);/* crystal */
+ cyl(g,.09,.09,.08,C.bl,3,.95,.1,.35);cyl(g,.09,.09,.08,C.cu,3,1.15,.1,.35);
+ box(g,.18,.12,.18,C.wh,2,-.75,.1,-.4);box(g,.24,.1,.36,C.st,1.6,-.85,.09,.38);box(g,.36,.1,.24,C.st,1.6,.6,.09,.5);
+ for(var q=0;q<6;q++)box(g,.08,.06,.05,C.cu,1.4,.3+q*.12,.07,-.6);
+ tor(g,.07,.025,C.br,1.6,-1.3,.05,-.62,Math.PI/2);tor(g,.07,.025,C.br,1.6,1.3,.05,-.62,Math.PI/2);tor(g,.07,.025,C.br,1.6,1.3,.05,.62,Math.PI/2);tor(g,.07,.025,C.br,1.6,-1.3,.05,.62,Math.PI/2);
+ g.rotation.x=1.05;return g}
+function bldc(){var g=new THREE.Group();
+ cyl(g,1.05,1.05,.95,C.st,.8,0,.6,0,0,0,0,40);
+ cyl(g,1.1,1.1,.12,C.cu,1.4,0,1.12,0,0,0,0,40);
+ for(var i=0;i<6;i++){var a=i*Math.PI/3;box(g,.55,.06,.18,C.br,1.6,Math.cos(a)*.55,1.2,Math.sin(a)*.55,0,-a)}
+ cyl(g,.12,.12,.9,C.wh,2.2,0,1.6,0);
+ for(var j=0;j<12;j++){var b=j*Math.PI/6;box(g,.14,.75,.2,C.cu,1.3,Math.cos(b)*.82,.6,Math.sin(b)*.82,0,-b)}
+ cyl(g,.75,.75,.1,C.dk,.8,0,.05,0);
+ box(g,2.4,.08,.3,C.dk,.8,0,-.05,0);box(g,.3,.08,2.4,C.dk,.8,0,-.05,0);
+ cyl(g,1.2,1.2,.04,C.bl,1,0,-.2,0,0,0,0,40);/* encoder disc */
+ return g}
+
+/* ---- surface sampling (area-weighted, per-part emphasis) ---- */
+function sample(g){g.updateMatrixWorld(true);var tris=[],cum=[],tot=0,v=new THREE.Vector3();
+ g.traverse(function(o){if(!o.isMesh)return;var geo=o.geometry,pos=geo.attributes.position,idx=geo.index,n=idx?idx.count:pos.count,w=o.userData.w||1;
+  for(var i=0;i<n;i+=3){var a=[],k;for(k=0;k<3;k++){var id=idx?idx.getX(i+k):i+k;a.push(new THREE.Vector3().fromBufferAttribute(pos,id).applyMatrix4(o.matrixWorld))}
+   var ar=new THREE.Vector3().subVectors(a[1],a[0]).cross(new THREE.Vector3().subVectors(a[2],a[0])).length()*.5*w;if(ar<=0)continue;tot+=ar;tris.push([a,o.userData.c]);cum.push(tot)}});
+ var P=new Float32Array(N*3),Cl=new Float32Array(N*3),bb=new THREE.Box3();
+ for(var i=0;i<N;i++){var r=Math.random()*tot,lo=0,hi=cum.length-1;while(lo<hi){var mid=(lo+hi)>>1;if(cum[mid]<r)lo=mid+1;else hi=mid}
+  var T=tris[lo],u=Math.random(),w2=Math.random();if(u+w2>1){u=1-u;w2=1-w2}
+  v.copy(T[0][0]).addScaledVector(new THREE.Vector3().subVectors(T[0][1],T[0][0]),u).addScaledVector(new THREE.Vector3().subVectors(T[0][2],T[0][0]),w2);
+  P[i*3]=v.x;P[i*3+1]=v.y;P[i*3+2]=v.z;bb.expandByPoint(v);var c=T[1],jit=.85+Math.random()*.3;Cl[i*3]=c.r*jit;Cl[i*3+1]=c.g*jit;Cl[i*3+2]=c.b*jit}
+ var ctr=bb.getCenter(new THREE.Vector3()),sz=bb.getSize(new THREE.Vector3()),sc=3.4/Math.max(sz.x,sz.y,sz.z);
+ var order=[];for(i=0;i<N;i++)order.push(i);order.sort(function(a,b){return (P[a*3+1]-P[b*3+1])||(Math.atan2(P[a*3+2],P[a*3])-Math.atan2(P[b*3+2],P[b*3]))});
+ var P2=new Float32Array(N*3),C2=new Float32Array(N*3);order.forEach(function(o,j){P2[j*3]=(P[o*3]-ctr.x)*sc;P2[j*3+1]=(P[o*3+1]-ctr.y)*sc;P2[j*3+2]=(P[o*3+2]-ctr.z)*sc;C2[j*3]=Cl[o*3];C2[j*3+1]=Cl[o*3+1];C2[j*3+2]=Cl[o*3+2]});
+ return {p:P2,c:C2}}
+var M=[amr,arm,mcu,bldc].map(function(f){return sample(f())});
+
+/* ---- point cloud with GPU morph ---- */
+var geo=new THREE.BufferGeometry(),rnd=new Float32Array(N);for(var i=0;i<N;i++)rnd[i]=Math.random();
+var aFrom=new THREE.BufferAttribute(M[0].p.slice(),3),aTo=new THREE.BufferAttribute(M[0].p.slice(),3),cFrom=new THREE.BufferAttribute(M[0].c.slice(),3),cTo=new THREE.BufferAttribute(M[0].c.slice(),3);
+geo.setAttribute('position',aFrom);geo.setAttribute('aTo',aTo);geo.setAttribute('cFrom',cFrom);geo.setAttribute('cTo',cTo);geo.setAttribute('aRnd',new THREE.BufferAttribute(rnd,1));
+var U={uP:{value:1},uT:{value:0},uSize:{value:small?34:40},uPR:{value:renderer.getPixelRatio()}};
+var mat=new THREE.ShaderMaterial({uniforms:U,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
+ vertexShader:'attribute vec3 aTo;attribute vec3 cFrom;attribute vec3 cTo;attribute float aRnd;uniform float uP;uniform float uT;uniform float uSize;uniform float uPR;varying vec3 vC;varying float vA;'+
+ 'void main(){float p=clamp((uP-aRnd*.35)/.65,0.,1.);p=p*p*(3.-2.*p);float b=sin(p*3.14159);vec3 q=mix(position,aTo,p);'+
+ 'q+=vec3(sin(aRnd*91.),cos(aRnd*47.),sin(aRnd*13.))*.45*b;q.y+=sin(uT*1.3+aRnd*6.283)*.012;'+
+ 'vC=mix(cFrom,cTo,p);vec4 mv=modelViewMatrix*vec4(q,1.);gl_Position=projectionMatrix*mv;gl_PointSize=uSize*uPR*(1.+b*.5)/-mv.z;vA=.78-.3*b;}',
+ fragmentShader:'varying vec3 vC;varying float vA;void main(){vec2 c=gl_PointCoord-.5;float r=length(c);if(r>.5)discard;gl_FragColor=vec4(vC,smoothstep(.5,0.,r)*vA);}'});
+var cloud=new THREE.Points(geo,mat),rig=new THREE.Group();rig.add(cloud);scene.add(rig);
+/* floor rings */
+function ring(r,op){var pts=[];for(var i=0;i<=96;i++){var a=i/96*Math.PI*2;pts.push(new THREE.Vector3(Math.cos(a)*r,0,Math.sin(a)*r))}var l=new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),new THREE.LineBasicMaterial({color:0xe8915a,transparent:true,opacity:op}));l.position.y=-1.95;scene.add(l)}
+ring(2.3,.28);ring(2.7,.12);ring(1.6,.08);
+ptsEl.textContent=N.toLocaleString('fr-FR');
+
+/* ---- morph control ---- */
+var morphT0=-1,DUR=1.7;
+function easeAt(rv,P){var p=Math.min(Math.max((P-rv*.35)/.65,0),1);return p*p*(3-2*p)}
+function go(i){if(i===cur&&morphT0<0)return;var P=U.uP.value;
+ for(var k=0;k<N;k++){var e=easeAt(rnd[k],P);for(var d=0;d<3;d++){var x=k*3+d;aFrom.array[x]=aFrom.array[x]+(aTo.array[x]-aFrom.array[x])*e;cFrom.array[x]=cFrom.array[x]+(cTo.array[x]-cFrom.array[x])*e}}
+ aTo.array.set(M[i].p);cTo.array.set(M[i].c);aFrom.needsUpdate=aTo.needsUpdate=cFrom.needsUpdate=cTo.needsUpdate=true;
+ U.uP.value=0;morphT0=reduce?-1:performance.now();if(reduce)U.uP.value=1;cur=i;showPanel(i);last=performance.now()}
+
+/* ---- interaction: drag to rotate, tabs, autoplay ---- */
+var rotY=.6,vel=0,drag=false,lx=0,tilt=0,ty=0,AUTO=6500,last=performance.now(),hover=false;
+stage.addEventListener('pointerdown',function(e){drag=true;lx=e.clientX;vel=0;try{stage.setPointerCapture(e.pointerId)}catch(x){}});
+stage.addEventListener('pointermove',function(e){var r=stage.getBoundingClientRect();ty=((e.clientY-r.top)/r.height-.5)*.35;if(!drag)return;var dx=e.clientX-lx;lx=e.clientX;vel=dx*.006;rotY+=vel});
+['pointerup','pointercancel','pointerleave'].forEach(function(ev){stage.addEventListener(ev,function(){drag=false;if(ev==='pointerleave')ty=0})});
+stage.addEventListener('pointerenter',function(){hover=true});stage.addEventListener('pointerleave',function(){hover=false});
+tabs.forEach(function(b){b.addEventListener('click',function(){go(+b.getAttribute('data-i'))})});
+function size(){var w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);cam.aspect=w/h;cam.fov=w/h<1.1?38:32;cam.updateProjectionMatrix()}
+size();try{new ResizeObserver(size).observe(stage)}catch(e){window.addEventListener('resize',size)}
+var vis=true;try{new IntersectionObserver(function(es){vis=es[0].isIntersecting;if(vis)last=performance.now()-(Number(tabs[cur].style.getPropertyValue('--prog'))||0)*AUTO},{threshold:.15}).observe(stage)}catch(e){}
+var t0=performance.now(),prev=t0;
+function frame(now){requestAnimationFrame(frame);if(!vis||document.hidden){prev=now;return}var dt=Math.min((now-prev)/1000,.05);prev=now;
+ U.uT.value=(now-t0)/1000;
+ if(morphT0>=0){U.uP.value=Math.min((now-morphT0)/(DUR*1000),1);if(U.uP.value>=1)morphT0=-1}
+ if(!drag){vel*=.94;rotY+=vel;rotY+=(.45-rotY)*.004}
+ tilt+=(ty-tilt)*.06;rig.rotation.set(tilt,rotY+(reduce?0:Math.sin(U.uT.value*.4)*.5),0);
+ if(!reduce&&!hover&&!drag&&morphT0<0){var pr=(now-last)/AUTO;tabs[cur].style.setProperty('--prog',Math.min(pr,1));if(pr>=1)go((cur+1)%M.length)}else if(hover||drag){last=now-(Number(tabs[cur].style.getPropertyValue('--prog'))||0)*AUTO}
+ renderer.render(scene,cam)}
+requestAnimationFrame(frame);
+};
+(function(){var lab=document.getElementById('lab'),done=false;if(!lab)return;function load(){if(done)return;done=true;var sc=document.createElement('script');sc.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';sc.onload=sc.onerror=function(){window.__initLab()};document.head.appendChild(sc)}
+try{var io=new IntersectionObserver(function(es){if(es[0].isIntersecting){io.disconnect();load()}},{rootMargin:'1200px 0px'});io.observe(lab)}catch(e){load()}})();
+</script>
+<script>
+(function(){var sec=document.getElementById('projects'),pb=document.getElementById('pb'),pbn=document.getElementById('pbn'),cur=null,
+items=[].slice.call(sec.querySelectorAll('.fp,.pi')),
+N={stm:'STM32 & FreeRTOS',ros:'ROS 2 & navigation',iot:'Protocoles & IoT',ai:'Vision & IA embarquée',ctl:'Électronique & commande'};
+function has(el,k){return (' '+(el.getAttribute('data-skills')||'')+' ').indexOf(' '+k+' ')>-1}
+document.querySelectorAll('.skc').forEach(function(c){var k=c.parentNode.getAttribute('data-skill');c.textContent='('+items.filter(function(i){return has(i,k)}).length+')'});
+function show(k){cur=k;var all=document.querySelector('.fb[data-f="all"]');if(all&&all.getAttribute('aria-pressed')!=='true')all.click();
+items.forEach(function(i){i.classList.toggle('hl',has(i,k))});sec.classList.add('focus');if(window.gsap){gsap.to(sec.querySelectorAll('.feat > .card, .plist > .pi, .eyebrow, h2'),{opacity:1,y:0,duration:.4,overwrite:true,clearProps:'transform'})}pbn.textContent=window.__t(N[k]);pb.hidden=false;
+var red=window.matchMedia('(prefers-reduced-motion:reduce)').matches;if(window.__lenis&&!red)window.__lenis.scrollTo(sec,{offset:-84});else sec.scrollIntoView({behavior:red?'auto':'smooth'});
+if(window.ScrollTrigger)ScrollTrigger.refresh()}
+function clear(){cur=null;sec.classList.remove('focus');items.forEach(function(i){i.classList.remove('hl')});pb.hidden=true}
+document.querySelectorAll('[data-skill]').forEach(function(b){if(b.tagName==='BUTTON')b.addEventListener('click',function(){show(b.getAttribute('data-skill'))})});
+document.getElementById('pbx').addEventListener('click',clear);
+document.querySelectorAll('.fb[data-f]').forEach(function(b){b.addEventListener('click',function(){if(cur&&b.getAttribute('data-f')!=='all')clear()})});
+document.querySelectorAll('.lb').forEach(function(b){b.addEventListener('click',function(){setTimeout(function(){if(cur)pbn.textContent=window.__t(N[cur])},0)})});
+})();
+</script>
+<script>
+/* ---------- case-study drawer ---------- */
+(function(){var D={"vision": {"tag": ["Robotique · Vision · En cours", "Robotics · Vision · In progress"], "title": ["Détection et suivi d'obstacles par vision", "Vision-based obstacle detection and tracking"], "kpi": [["Temps réel", "Real time", "détection et suivi", "detection and tracking"], ["2 approches", "2 approaches", "logique floue + PID comparées", "fuzzy logic + PID compared"]], "ctx": ["Projet personnel en cours, centré sur la navigation autonome d'un robot mobile dans un environnement où les obstacles bougent.", "Ongoing personal project on autonomous navigation for a mobile robot in an environment with moving obstacles."], "goal": ["Détecter et suivre en temps réel les obstacles statiques et dynamiques, puis adapter la trajectoire du robot sans collision.", "Detect and track static and moving obstacles in real time, then adapt the robot's path without collisions."], "did": [["Détection et suivi des obstacles avec OpenCV et YOLO.", "Obstacle detection and tracking with OpenCV and YOLO."], ["Stratégie d'évitement combinant logique floue et régulation PID pour ajuster la vitesse des roues et la direction.", "Avoidance strategy combining fuzzy logic and PID control to adjust wheel speed and heading."], ["Intégration sous ROS 2 et simulation sous Gazebo pour évaluer la navigation et comparer les stratégies de commande.", "Integration in ROS 2 and simulation in Gazebo to evaluate navigation and compare control strategies."]], "res": ["En cours : la comparaison des stratégies de commande en simulation est la prochaine étape.", "In progress: comparing the control strategies in simulation is the next step."], "arch": ["Caméra|Camera", "YOLO · OpenCV", "Suivi d'obstacles|Obstacle tracking", "Logique floue + PID|Fuzzy logic + PID", "Commande des roues|Wheel control"], "tech": ["Python", "C++", "OpenCV", "YOLO", "ROS 2", "Gazebo"]}, "lmr": {"tag": ["Robotique · Multi-agents · Oct. 2026", "Robotics · Multi-agent · Oct 2026"], "title": ["Coordination de robots logistiques par LLM", "LLM-driven coordination of logistics robots"], "kpi": [["4 robots", "4 robots", "LMR coordonnés", "LMR coordinated"], ["A → Z", "A → Z", "conçu et développé seul", "designed and built solo"]], "ctx": ["Les robots LMR (Latent Mobile Robots) se glissent sous une charge et la soulèvent pour la déplacer, comme dans un entrepôt.", "LMR robots (Latent Mobile Robots) slide under a load and lift it to move it, as in a warehouse."], "goal": ["Faire travailler 4 robots ensemble à partir d'une simple demande en langage naturel, sans collision ni blocage.", "Get 4 robots working together from a plain natural-language request, without collisions or deadlocks."], "did": [["Architecture distribuée pour coordonner les 4 robots en simulation.", "Distributed architecture coordinating the 4 robots in simulation."], ["Planification de trajectoires multi-agents et résolution de conflits en temps réel.", "Multi-agent path planning and real-time conflict resolution."], ["Gemini transforme les demandes en missions, répartit les tâches entre les robots et replanifie en cas d'imprévu.", "Gemini turns requests into missions, assigns tasks across robots and replans when something unexpected happens."]], "res": ["Un système complet, conçu et développé seul de A à Z, qui passe d'une phrase à une mission exécutée par la flotte.", "A complete system, designed and built solo from scratch, that goes from a sentence to a mission run by the fleet."], "arch": ["Demande en langage naturel|Natural-language request", "Gemini (LLM)", "Planificateur de missions|Mission planner", "4 robots LMR · ROS 2|4 LMR robots · ROS 2", "Simulation Gazebo|Gazebo simulation"], "tech": ["ROS 2 Jazzy", "Gazebo", "Python", "C++", "Gemini"]}, "foc": {"tag": ["Embarqué · ELECTRONICA × ACTIA · 2025", "Embedded · ELECTRONICA × ACTIA · 2025"], "title": ["Synchronisation de deux moteurs brushless", "Speed synchronisation of two brushless motors"], "kpi": [["< 2 %", "< 2 %", "d'écart de vitesse", "speed deviation"], ["FOC", "FOC", "commande vectorielle", "field-oriented control"]], "ctx": ["Projet mené au sein d'ELECTRONICA CLUB, le club d'électronique embarquée de l'ENISo, en collaboration avec ACTIA Engineering.", "Project run at ELECTRONICA CLUB, ENISo's embedded electronics club, in collaboration with ACTIA Engineering."], "goal": ["Faire tourner deux moteurs brushless à la même vitesse, de façon stable.", "Run two brushless motors at the same speed, reliably."], "did": [["Commande vectorielle (FOC) développée sur STSPIN32F0.", "Field-oriented control (FOC) developed on STSPIN32F0."], ["Boucle de régulation temps réel sous FreeRTOS.", "Real-time control loop under FreeRTOS."]], "res": ["L'écart de vitesse entre les deux moteurs reste sous 2 %.", "The speed deviation between the two motors stays under 2 %."], "arch": ["Consigne de vitesse|Speed setpoint", "Régulateur · FreeRTOS|Controller · FreeRTOS", "FOC · STSPIN32F0", "Moteurs 1 et 2|Motors 1 and 2", "Retour de vitesse|Speed feedback"], "tech": ["STSPIN32F0", "FreeRTOS", "FOC", "C"]}, "edge": {"tag": ["Edge AI · Stage AFRICARBON · 2026", "Edge AI · AFRICARBON internship · 2026"], "title": ["Supervision du courant AC avec Edge AI", "AC current monitoring with Edge AI"], "kpi": [["≈ −40 %", "≈ −40 %", "de latence de transmission", "transmission latency"], ["Irms", "Irms", "sur fenêtre glissante", "sliding window"]], "ctx": ["Stage de juillet à août 2026 chez AFRICARBON, à Sousse.", "Internship from July to August 2026 at AFRICARBON in Sousse."], "goal": ["Superviser le courant alternatif d'une installation et traiter les données au plus près du capteur.", "Monitor an installation's AC current and process the data as close to the sensor as possible."], "did": [["Système IoT de supervision avec un capteur de courant SCT-013.", "IoT monitoring system with an SCT-013 current sensor."], ["Acquisition par ADC, conditionnement de la chaîne analogique et calcul du courant efficace (Irms) sur fenêtre glissante.", "ADC acquisition, analog front-end conditioning and RMS current (Irms) over a sliding window."], ["Modèle d'inférence Edge AI pour traiter les données localement.", "Edge AI inference model to process data locally."]], "res": ["Latence de transmission réduite d'environ 40 % et bande passante réseau optimisée.", "Transmission latency cut by about 40 % and network bandwidth optimised."], "arch": ["Capteur SCT-013|SCT-013 sensor", "Conditionnement analogique|Analog conditioning", "ADC", "Calcul de l'Irms|Irms computation", "Inférence Edge AI|Edge AI inference", "Passerelle sans fil|Wireless gateway"], "tech": ["SCT-013", "ADC", "Edge AI", "C"]}, "lora": {"tag": ["IoT industriel · Stage YUCCAINFO · 2025", "Industrial IoT · YUCCAINFO internship · 2025"], "title": ["Réseau IIoT LoRaWAN basse consommation", "Low-power LoRaWAN IIoT network"], "kpi": [["≈ 12 mois", "≈ 12 months", "d'autonomie par nœud", "battery life per node"], ["≈ 98 %", "≈ 98 %", "de paquets livrés", "packet delivery"]], "ctx": ["Stage de juin à août 2025 chez YUCCAINFO, à Sousse.", "Internship from June to August 2025 at YUCCAINFO in Sousse."], "goal": ["Remonter des mesures de capteurs sur de longues distances, avec des nœuds qui tiennent longtemps sur batterie.", "Send sensor readings over long distances with nodes that last a long time on battery."], "did": [["Nœuds basse consommation sur STM32WLE5J8 / RAK3172.", "Low-power nodes on STM32WLE5J8 / RAK3172."], ["Activation OTAA vers The Things Network, dans une architecture IIoT multi-nœuds.", "OTAA join to The Things Network in a multi-node IIoT architecture."], ["Mesure et transmission des données de capteurs, visualisation sous Node-RED.", "Sensor data measurement and transmission, Node-RED dashboards."]], "res": ["Environ 12 mois d'autonomie par nœud et environ 98 % de paquets livrés.", "About 12 months of battery life per node and about 98 % packet delivery."], "arch": ["Capteurs|Sensors", "Nœud STM32WL · RAK3172|STM32WL node · RAK3172", "LoRaWAN · OTAA", "The Things Network", "Node-RED"], "tech": ["STM32WLE5J8", "RAK3172", "LoRaWAN", "TTN", "Node-RED"]}},ORDER=["vision", "lmr", "foc", "edge", "lora"],d=document.getElementById('csd'),bk=document.getElementById('csBack');if(!d)return;
+var cur=null,opener=null,T=function(k){return window.__t(k)};
+function L(x){return Array.isArray(x)?(window.__lang==='en'?x[1]:x[0]):x}
+function bi(x){var p=x.split('|');return window.__lang==='en'&&p[1]?p[1]:p[0]}
+function esc(x){return String(x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function render(k){var c=D[k];cur=k;document.getElementById('csTag').textContent=L(c.tag);document.getElementById('csTitle').textContent=L(c.title);
+ document.getElementById('csKpi').innerHTML=c.kpi.map(function(q){return '<div><b>'+esc(window.__lang==='en'?q[1]:q[0])+'</b><span>'+esc(window.__lang==='en'?q[3]:q[2])+'</span></div>'}).join('');
+ var h='';function blk(t,inner){h+='<div class="csblk"><h3>'+esc(T(t))+'</h3>'+inner+'</div>'}
+ blk('Contexte','<p>'+esc(L(c.ctx))+'</p>');blk('Objectif','<p>'+esc(L(c.goal))+'</p>');
+ blk("Ce que j'ai fait",'<ul>'+c.did.map(function(x){return '<li>'+esc(L(x))+'</li>'}).join('')+'</ul>');
+ blk('Architecture','<ol class="flow">'+c.arch.map(function(x){return '<li>'+esc(bi(x))+'</li>'}).join('')+'</ol>');
+ blk('Résultat','<p>'+esc(L(c.res))+'</p>');
+ blk('Technologies','<div class="chips cstech">'+c.tech.map(function(x){return '<span>'+esc(x)+'</span>'}).join('')+'</div>');
+ document.getElementById('csBody').innerHTML=h;
+ var i=ORDER.indexOf(k),pv=document.getElementById('csPrev'),nx=document.getElementById('csNext');
+ pv.textContent=T('← Précédent');nx.textContent=T('Suivant →');pv.dataset.k=ORDER[(i+ORDER.length-1)%ORDER.length];nx.dataset.k=ORDER[(i+1)%ORDER.length];
+ d.scrollTop=0;
+ if(window.gsap&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches){gsap.from(d.querySelectorAll('.cskpi > div, .csblk'),{opacity:0,y:16,duration:.5,stagger:.06,ease:'power2.out',delay:.12,clearProps:'all'});gsap.from(d.querySelectorAll('.flow li'),{opacity:0,x:-14,duration:.4,stagger:.08,delay:.45,ease:'power2.out',clearProps:'all'})}}
+function open(k,btn){opener=btn||opener;render(k);bk.hidden=false;d.hidden=false;document.documentElement.classList.add('cs-open');if(window.__lenis)window.__lenis.stop();
+ requestAnimationFrame(function(){requestAnimationFrame(function(){bk.classList.add('on');d.classList.add('on');document.getElementById('csX').focus()})})}
+function close(){if(d.hidden)return;bk.classList.remove('on');d.classList.remove('on');document.documentElement.classList.remove('cs-open');if(window.__lenis)window.__lenis.start();
+ setTimeout(function(){bk.hidden=true;d.hidden=true;cur=null},420);if(opener)opener.focus({preventScroll:true})}
+document.querySelectorAll('.csb').forEach(function(b){b.addEventListener('click',function(){open(b.getAttribute('data-case'),b)})});
+document.getElementById('csX').addEventListener('click',close);bk.addEventListener('click',close);
+document.getElementById('csPrev').addEventListener('click',function(){render(this.dataset.k)});document.getElementById('csNext').addEventListener('click',function(){render(this.dataset.k)});
+document.addEventListener('keydown',function(e){if(d.hidden)return;if(e.key==='Escape'){close();return}
+ if(e.key==='Tab'){var f=[].slice.call(d.querySelectorAll('button,a[href]')).filter(function(x){return x.offsetParent!==null});if(!f.length)return;var a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}});
+document.querySelectorAll('.lb').forEach(function(b){b.addEventListener('click',function(){setTimeout(function(){if(cur)render(cur)},0)})});
+})();
+/* ---------- copy buttons ---------- */
+(function(){var st=document.getElementById('cs');
+document.querySelectorAll('.cpy').forEach(function(b){var label=b.textContent;b.addEventListener('click',function(){var v=b.getAttribute('data-copy'),msg=b.getAttribute('data-msg');
+ function ok(){b.classList.add('ok');b.textContent=window.__t('Copié ✓');if(st){st.className='status';st.textContent=window.__t(msg)}setTimeout(function(){b.classList.remove('ok');b.textContent=window.__t('Copier')},2000)}
+ function fail(){var t=b.parentNode.querySelector('.ctv');try{var r=document.createRange();r.selectNodeContents(t);var sel=getSelection();sel.removeAllRanges();sel.addRange(r)}catch(x){}if(st){st.className='status';st.textContent=window.__t('Sélectionnez le texte puis copiez-le (Ctrl+C).')}}
+ try{navigator.clipboard.writeText(v).then(ok,fail)}catch(x){fail()}})})})();
+/* ---------- timeline fill + PCB trace (needs GSAP) ---------- */
+(function(){var red=window.matchMedia('(prefers-reduced-motion:reduce)').matches,G=window.gsap&&window.ScrollTrigger&&!red;
+document.querySelectorAll('.rail').forEach(function(r){var f=document.createElement('span');f.className='rfill';f.setAttribute('aria-hidden','true');r.insertBefore(f,r.firstChild);
+ if(!G){r.querySelectorAll('.ev').forEach(function(e){e.classList.add('lit')});return}
+ gsap.fromTo(f,{scaleY:0},{scaleY:1,ease:'none',scrollTrigger:{trigger:r,start:'top 72%',end:'bottom 72%',scrub:.5}});
+ r.querySelectorAll('.ev').forEach(function(e){ScrollTrigger.create({trigger:e,start:'top 72%',onEnter:function(){e.classList.add('lit')},onLeaveBack:function(){e.classList.remove('lit')}})})});
+
+var svg=document.getElementById('trace'),main=document.getElementById('top');if(!svg||!main)return;
+var base=document.getElementById('trBase'),live=document.getElementById('trLive'),vg=document.getElementById('trVias'),NS='http://www.w3.org/2000/svg',vias=[],y0=0,y1=1,len=1,mainTop=0;
+function build(){var mw=main.clientWidth,wrapW=Math.min(1100,mw),x=(mw-wrapW)/2-36;
+ if(x<26){svg.classList.remove('on');return}svg.classList.add('on');
+ var secs=[].slice.call(main.querySelectorAll(':scope > section[id], :scope > section')).filter(function(s){return s.querySelector('.eyebrow')});
+ mainTop=main.getBoundingClientRect().top+scrollY;var mh=main.scrollHeight;svg.setAttribute('height',mh);svg.style.height=mh+'px';svg.setAttribute('viewBox','0 0 '+mw+' '+mh);
+ var ys=secs.map(function(s){var e=s.querySelector('.eyebrow');return e.getBoundingClientRect().top+scrollY-mainTop+8});
+ var hero=main.querySelector('.hero');y0=hero?hero.offsetTop+hero.offsetHeight-60:ys[0]-200;
+ var lane=[x,x-18],li=0,d='M'+x+' '+y0,py=y0;
+ ys.forEach(function(y,i){var mid=(py+y)/2,nx=lane[(li+1)%2];if(y-py>120){d+=' L'+lane[li]+' '+(mid-9)+' L'+nx+' '+(mid+9);li=(li+1)%2}d+=' L'+lane[li]+' '+y;py=y});
+ y1=py+80;d+=' L'+lane[li]+' '+y1;
+ base.setAttribute('d',d);live.setAttribute('d',d);len=live.getTotalLength();live.style.strokeDasharray=len;
+ vg.innerHTML='';vias=[];var lx=lane;li=0;py=y0;
+ ys.forEach(function(y,i){var mid=(py+y)/2;if(y-py>120)li=(li+1)%2;py=y;var g=document.createElementNS(NS,'g');g.setAttribute('class','via');
+  var c=document.createElementNS(NS,'circle');c.setAttribute('cx',lane[li]);c.setAttribute('cy',y);c.setAttribute('r',6);
+  var k=document.createElementNS(NS,'circle');k.setAttribute('class','core');k.setAttribute('cx',lane[li]);k.setAttribute('cy',y);k.setAttribute('r',2.2);
+  var tx=document.createElementNS(NS,'text');tx.setAttribute('x',lane[li]-14);tx.setAttribute('y',y+3);tx.setAttribute('text-anchor','end');tx.textContent='TP'+(i+1);
+  g.appendChild(c);g.appendChild(k);g.appendChild(tx);vg.appendChild(g);vias.push({g:g,y:y})});
+ var pad=document.createElementNS(NS,'rect');pad.setAttribute('x',lane[li]-7);pad.setAttribute('y',y1-2);pad.setAttribute('width',14);pad.setAttribute('height',14);pad.setAttribute('rx',3);pad.setAttribute('class','pad');pad.style.fill='none';pad.style.stroke='var(--accent)';pad.style.opacity='.5';vg.appendChild(pad);
+ update()}
+function update(){if(!svg.classList.contains('on'))return;var yd=(red?1e9:scrollY+innerHeight*.62-mainTop),p=Math.min(Math.max((yd-y0)/(y1-y0),0),1);
+ live.style.strokeDashoffset=len*(1-p);vias.forEach(function(v){v.g.classList.toggle('lit',yd>=v.y)})}
+var rq=0;function sched(){if(!rq)rq=requestAnimationFrame(function(){rq=0;update()})}
+window.addEventListener('scroll',sched,{passive:true});if(window.__lenis)window.__lenis.on('scroll',sched);
+var bt=0;function rebuild(){clearTimeout(bt);bt=setTimeout(build,150)}
+try{new ResizeObserver(rebuild).observe(main)}catch(e){window.addEventListener('resize',rebuild)}
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(rebuild);window.addEventListener('load',rebuild);build();
+})();
+</script>
+<script>
+(function(){
+var EN=window.__EN,FR={},nodes=[],attrs=[],root=document.body,h1=document.querySelector('.hero h1'),h1fr=window.__h1fr||(h1&&h1.innerHTML);
+var tw=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:function(n){var p=n.parentNode;if(!p||/^(SCRIPT|STYLE)$/.test(p.nodeName)||(h1&&h1.contains(n)))return NodeFilter.FILTER_REJECT;return n.nodeValue.trim()?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT}});
+var n;while(n=tw.nextNode()){var k=n.nodeValue.replace(/\s+/g,' ').trim();if(EN[k])nodes.push({n:n,k:k,pre:n.nodeValue.match(/^\s*/)[0],post:n.nodeValue.match(/\s*$/)[0]})}
+root.querySelectorAll('[aria-label],[alt]').forEach(function(el){['aria-label','alt'].forEach(function(a){var v=el.getAttribute(a);if(v&&EN[v]&&el.id!=='menuBtn')attrs.push({el:el,a:a,k:v})})});
+var tfr=document.title,md=document.querySelector('meta[name="description"]'),mdfr=md&&md.content;
+function wrapWords(node){[].slice.call(node.childNodes).forEach(function(c){if(c.nodeType===3){var f=document.createDocumentFragment();c.textContent.split(/(\s+)/).forEach(function(part){if(!part)return;if(/^\s+$/.test(part))f.appendChild(document.createTextNode(part));else{var sp=document.createElement('span');sp.className='w';sp.textContent=part;f.appendChild(sp)}});node.replaceChild(f,c)}else if(c.nodeType===1&&c.tagName!=='BR')wrapWords(c)})}
+function apply(l,anim){window.__lang=l;var en=l==='en';document.documentElement.lang=l;
+nodes.forEach(function(o){o.n.nodeValue=o.pre+(en?EN[o.k]:o.k)+o.post});
+attrs.forEach(function(o){o.el.setAttribute(o.a,en?EN[o.k]:o.k)});
+var mb=document.getElementById('menuBtn');if(mb)mb.setAttribute('aria-label',window.__t(mb.getAttribute('aria-expanded')==='true'?'Fermer le menu':'Ouvrir le menu'));
+document.title=en?EN.__title:tfr;if(md)md.content=en?'Portfolio of Amine, mechatronics engineering student (ENISo). Embedded systems (STM32/FreeRTOS) and ROS 2 robotics. Looking for a 6-month final-year internship from February 2027.':mdfr;
+if(h1&&anim){h1.innerHTML=en?EN.__h1:h1fr;if(document.documentElement.classList.contains('gs')){wrapWords(h1);if(window.gsap)gsap.from(h1.querySelectorAll('.w'),{filter:'blur(10px)',opacity:0,y:-12,duration:.6,stagger:.06,clearProps:'filter,transform'})}}
+document.querySelectorAll('.lb').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-l')===l?'true':'false')});
+document.querySelectorAll('.err').forEach(function(e){e.textContent=''});
+try{localStorage.setItem('lang',l)}catch(e){}
+if(window.ScrollTrigger)ScrollTrigger.refresh()}
+document.querySelectorAll('.lb').forEach(function(b){b.addEventListener('click',function(){var l=b.getAttribute('data-l');if(l!==window.__lang||l==='fr')apply(l,true)})});
+if(window.__lang==='en')apply('en',true);
+})();
+</script>
+<script>
+(function(){
+if(window.matchMedia('(prefers-reduced-motion:reduce)').matches||!window.matchMedia('(hover:hover) and (pointer:fine)').matches)return;
+document.querySelectorAll('.fp').forEach(function(c){
+ c.classList.add('tilt');var g=document.createElement('span');g.className='glare';g.setAttribute('aria-hidden','true');c.appendChild(g);
+ var raf=0,px=0,py=0;
+ function paint(){raf=0;c.style.transform='perspective(1000px) rotateX('+(-py*7).toFixed(2)+'deg) rotateY('+(px*9).toFixed(2)+'deg) translateY(-6px) scale(1.012)';c.style.setProperty('--gx',((px+.5)*100).toFixed(1)+'%')}
+ c.addEventListener('pointerenter',function(){c.classList.add('on')});
+ c.addEventListener('pointermove',function(e){var r=c.getBoundingClientRect();px=(e.clientX-r.left)/r.width-.5;py=(e.clientY-r.top)/r.height-.5;if(!raf)raf=requestAnimationFrame(paint)});
+ c.addEventListener('pointerleave',function(){c.classList.remove('on');if(raf){cancelAnimationFrame(raf);raf=0}c.style.transform=''});
+});
+})();
+</script>
+</body>
+</html>
